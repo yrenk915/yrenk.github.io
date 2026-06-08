@@ -84,7 +84,7 @@
             font-weight: 400;
         }
 
-        /* ============ 自定义光标 (仅PC端，跟手且无延迟) ============ */
+        /* ============ 自定义光标 (仅PC端，完全跟手无延迟) ============ */
         .custom-cursor {
             position: fixed;
             top: 0;
@@ -858,12 +858,12 @@
             const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
             const cursorEl = document.getElementById('customCursor');
             if (isTouchDevice && cursorEl) {
-                cursorEl.remove(); // 手机端直接移除小白点
+                cursorEl.remove(); // 手机端直接移除小白点元素
                 document.documentElement.style.cursor = 'auto';
                 document.body.style.cursor = 'auto';
             } 
             else if (cursorEl) {
-                // PC 端: 完全跟手的直接跟随（无延迟，不使用lerp）
+                // PC 端: 完全跟手，直接定位无延迟
                 let mouseX = 0, mouseY = 0;
                 const updateCursor = (e) => {
                     mouseX = e.clientX;
@@ -887,7 +887,7 @@
                     cursorEl.style.opacity = '1';
                     if (e.clientX && e.clientY) updateCursor(e);
                 });
-                // 初始隐藏，防止左上角闪现
+                // 初始稍微延迟显示，避免左上角闪现
                 cursorEl.style.opacity = '0';
                 setTimeout(() => { if (cursorEl) cursorEl.style.opacity = '1'; }, 100);
             }
@@ -946,7 +946,7 @@
                 const closeModal = () => modal.classList.remove('active');
                 closeBtn.addEventListener('click', closeModal);
                 modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-                // 公众号链接提示替换真实地址（目前占位）
+                // 公众号链接提示替换真实地址（目前占位，用户可自行修改）
                 officialLink.addEventListener('click', (e) => {
                     if (officialLink.href.includes('placeholder')) {
                         e.preventDefault();
@@ -955,7 +955,7 @@
                 });
             }
 
-            // 移动端触摸反馈优化（不干扰小白点）
+            // 移动端触摸反馈优化（不影响光标逻辑）
             const touchItems = document.querySelectorAll('.contact-link, .contact-info-btn, .portfolio-item, .hero__scroll-indicator');
             touchItems.forEach(el => {
                 el.addEventListener('touchstart', () => { el.style.transform = 'scale(0.97)'; }, { passive: true });
