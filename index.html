@@ -681,6 +681,11 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .portfolio-item__img--loaded {
+            opacity: 1;
         }
         .portfolio-item__info {
             padding: 22px 24px;
@@ -907,10 +912,6 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
             }
-            .portfolio-item__image::after {
-                width: 28px;
-                height: 28px;
-            }
         }
         @media (max-width: 540px) {
             .portfolio-grid {
@@ -973,10 +974,6 @@
             }
             .loading-indicator {
                 width: 140px;
-            }
-            .portfolio-item__image::after {
-                width: 24px;
-                height: 24px;
             }
             .portfolio-item__info {
                 padding: 14px 16px;
@@ -1086,7 +1083,7 @@
                 <!-- 作品 1：书房 -->
                 <div class="portfolio-item">
                     <div class="portfolio-item__image">
-                        <img src="images/a.png" alt="书房" class="portfolio-item__img">
+                        <img src="images/a.webp" alt="书房" class="portfolio-item__img" loading="lazy" onload="this.classList.add('portfolio-item__img--loaded')">
                     </div>
                     <div class="portfolio-item__info">
                         <div class="portfolio-item__title" data-zh="书房" data-en="Study">书房</div>
@@ -1095,7 +1092,7 @@
                 <!-- 作品 2：过道 -->
                 <div class="portfolio-item">
                     <div class="portfolio-item__image">
-                        <img src="images/b.jpg" alt="过道" class="portfolio-item__img">
+                        <img src="images/b.webp" alt="过道" class="portfolio-item__img" loading="lazy" onload="this.classList.add('portfolio-item__img--loaded')">
                     </div>
                     <div class="portfolio-item__info">
                         <div class="portfolio-item__title" data-zh="过道" data-en="Corridor">过道</div>
@@ -1104,7 +1101,7 @@
                 <!-- 作品 3：角落 -->
                 <div class="portfolio-item">
                     <div class="portfolio-item__image">
-                        <img src="images/c.png" alt="角落" class="portfolio-item__img">
+                        <img src="images/c.webp" alt="角落" class="portfolio-item__img" loading="lazy" onload="this.classList.add('portfolio-item__img--loaded')">
                     </div>
                     <div class="portfolio-item__info">
                         <div class="portfolio-item__title" data-zh="角落" data-en="Corner">角落</div>
@@ -1414,7 +1411,7 @@
             console.log('%c yrenk %c personal site ',
                 'font-size:1.5em;font-weight:700;color:#F4EAC5;letter-spacing:0.06em;',
                 'font-size:0.9em;color:#F4EAC5;');
-            console.log('%c字体统一#F4EAC5 · 仅靠粗细大小区分层次 %c| %cCtrl+L 切换语言',
+            console.log('%c图片已转为 WebP 格式 · 懒加载 + 渐入动画 %c| %cCtrl+L 切换语言',
                 'color:#F4EAC5;', '', 'color:#F4EAC5;font-size:0.85em;');
 
             checkRevealElements();
