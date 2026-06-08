@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>yrenk — 艺术家 / 设计师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>yrenk — artist / designer</title>
     <style>
         :root {
             /* 主题色 #012696 */
@@ -50,15 +50,8 @@
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scrollbar-color: var(--primary-lighter) transparent;
+            cursor: none;
         }
-
-        /* 仅在非触摸设备上隐藏默认光标并启用自定义光标 */
-        @media (hover: hover) and (pointer: fine) {
-            html, body {
-                cursor: none;
-            }
-        }
-
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -81,10 +74,11 @@
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+            cursor: none;
             font-weight: 400;
         }
 
-        /* ============ 自定义光标 (仅PC端，完全跟手无延迟) ============ */
+        /* ============ 自定义光标 ============ */
         .custom-cursor {
             position: fixed;
             top: 0;
@@ -96,12 +90,12 @@
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: width 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-                        height 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-                        background 0.2s ease,
-                        box-shadow 0.2s ease;
+            transition: width 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+                height 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+                background 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
             box-shadow: 0 0 0 0 rgba(164, 226, 198, 0);
-            will-change: left, top;
+            will-change: transform, left, top;
         }
         .custom-cursor--inverted {
             background: var(--primary-mid-dark);
@@ -114,6 +108,16 @@
         }
         .custom-cursor--hover.custom-cursor--inverted {
             box-shadow: 0 0 22px 4px rgba(1, 38, 150, 0.5);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .custom-cursor {
+                display: none;
+            }
+            html,
+            body {
+                cursor: auto;
+            }
         }
 
         /* ============ 加载页面 ============ */
@@ -167,8 +171,12 @@
             animation: loadingProgress 2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
         }
         @keyframes loadingProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
         }
 
         /* ============ 动态模糊背景光斑 ============ */
@@ -199,6 +207,7 @@
             left: -16%;
             animation-name: orbFloat1;
             animation-duration: 18s;
+            animation-delay: 0s;
         }
         .bg-orb--2 {
             width: 50vmax;
@@ -208,6 +217,7 @@
             right: -14%;
             animation-name: orbFloat2;
             animation-duration: 22s;
+            animation-delay: -5s;
         }
         .bg-orb--3 {
             width: 40vmax;
@@ -217,6 +227,7 @@
             left: 38%;
             animation-name: orbFloat3;
             animation-duration: 20s;
+            animation-delay: -10s;
         }
         .bg-orb--4 {
             width: 32vmax;
@@ -226,32 +237,71 @@
             right: 18%;
             animation-name: orbFloat4;
             animation-duration: 16s;
+            animation-delay: -3s;
         }
 
         @keyframes orbFloat1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            20% { transform: translate(9vw, 6vh) scale(1.16); }
-            40% { transform: translate(4vw, 13vh) scale(0.88); }
-            60% { transform: translate(-6vw, 8vh) scale(1.09); }
-            80% { transform: translate(3vw, -4vh) scale(0.93); }
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            20% {
+                transform: translate(9vw, 6vh) scale(1.16);
+            }
+            40% {
+                transform: translate(4vw, 13vh) scale(0.88);
+            }
+            60% {
+                transform: translate(-6vw, 8vh) scale(1.09);
+            }
+            80% {
+                transform: translate(3vw, -4vh) scale(0.93);
+            }
         }
         @keyframes orbFloat2 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(-7vw, -9vh) scale(1.13); }
-            50% { transform: translate(-3vw, -4vh) scale(0.86); }
-            75% { transform: translate(6vw, -7vh) scale(1.06); }
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(-7vw, -9vh) scale(1.13);
+            }
+            50% {
+                transform: translate(-3vw, -4vh) scale(0.86);
+            }
+            75% {
+                transform: translate(6vw, -7vh) scale(1.06);
+            }
         }
         @keyframes orbFloat3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            30% { transform: translate(6vw, -5vh) scale(1.11); }
-            60% { transform: translate(-4vw, 7vh) scale(0.9); }
-            85% { transform: translate(2vw, -3vh) scale(1.05); }
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            30% {
+                transform: translate(6vw, -5vh) scale(1.11);
+            }
+            60% {
+                transform: translate(-4vw, 7vh) scale(0.9);
+            }
+            85% {
+                transform: translate(2vw, -3vh) scale(1.05);
+            }
         }
         @keyframes orbFloat4 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            35% { transform: translate(-5vw, 8vh) scale(1.19); }
-            65% { transform: translate(7vw, 3vh) scale(0.84); }
-            90% { transform: translate(-2vw, -6vh) scale(1.07); }
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            35% {
+                transform: translate(-5vw, 8vh) scale(1.19);
+            }
+            65% {
+                transform: translate(7vw, 3vh) scale(0.84);
+            }
+            90% {
+                transform: translate(-2vw, -6vh) scale(1.07);
+            }
         }
 
         .bg-texture {
@@ -273,7 +323,7 @@
             padding: 0 40px;
         }
 
-        /* ============ 导航栏 移动端优化 ============ */
+        /* ============ 导航栏 ============ */
         .nav {
             position: fixed;
             top: 0;
@@ -284,12 +334,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
             background: rgba(0, 20, 92, 0.85);
             border-bottom: 1px solid rgba(164, 226, 198, 0.1);
             transition: all var(--transition-medium);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         .nav--scrolled {
             background: rgba(0, 10, 50, 0.92);
@@ -305,6 +354,10 @@
             text-decoration: none;
             transition: all var(--transition-fast);
             position: relative;
+            white-space: nowrap;
+        }
+        .nav__logo:hover {
+            color: var(--text-all);
         }
         .nav__logo::after {
             content: '';
@@ -327,6 +380,7 @@
             gap: 28px;
             list-style: none;
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
         .nav__link {
             text-decoration: none;
@@ -341,6 +395,7 @@
             background: none;
             border: none;
             font-family: inherit;
+            white-space: nowrap;
         }
         .nav__link::after {
             content: '';
@@ -352,6 +407,10 @@
             background: var(--text-all);
             transition: width var(--transition-medium);
             border-radius: 1px;
+        }
+        .nav__link:hover {
+            color: var(--text-all);
+            font-weight: 600;
         }
         .nav__link:hover::after {
             width: 100%;
@@ -367,6 +426,11 @@
             padding: 3px;
             transition: all var(--transition-fast);
             cursor: pointer;
+            white-space: nowrap;
+        }
+        .lang-switch:hover {
+            background: rgba(1, 38, 150, 0.45);
+            border-color: rgba(164, 226, 198, 0.45);
         }
         .lang-option {
             padding: 6px 14px;
@@ -388,7 +452,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* ============ Hero ============ */
+        /* ============ Hero 区域 ============ */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -400,7 +464,7 @@
             position: relative;
         }
         .hero__name {
-            font-size: clamp(3rem, 12vw, 8rem);
+            font-size: clamp(3.5rem, 10vw, 8rem);
             font-weight: 700;
             letter-spacing: 0.07em;
             color: var(--text-all);
@@ -411,22 +475,58 @@
             animation: nameAppear 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
         }
         @keyframes nameAppear {
-            0% { opacity: 0; filter: blur(18px); letter-spacing: 0.32em; transform: translateY(24px); }
-            40% { opacity: 0.65; filter: blur(4px); }
-            100% { opacity: 1; filter: blur(0); letter-spacing: 0.07em; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                filter: blur(18px);
+                letter-spacing: 0.32em;
+                transform: translateY(24px);
+            }
+            40% {
+                opacity: 0.65;
+                filter: blur(4px);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                letter-spacing: 0.07em;
+                transform: translateY(0);
+            }
+        }
+        .hero__name--motion-blur {
+            transition: text-shadow 0.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+                letter-spacing 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .hero__name--motion-blur:hover {
+            letter-spacing: 0.16em;
+            transform: scale(1.04);
+            text-shadow:
+                -7px 0 12px rgba(244, 234, 197, 0.45),
+                -14px 0 20px rgba(244, 234, 197, 0.28),
+                -24px 0 30px rgba(244, 234, 197, 0.14),
+                7px 0 12px rgba(244, 234, 197, 0.45),
+                14px 0 20px rgba(244, 234, 197, 0.28),
+                24px 0 30px rgba(244, 234, 197, 0.14);
         }
         .hero__subtitle {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--text-all);
             letter-spacing: 0.1em;
             margin-top: 18px;
             font-weight: 300;
-            max-width: 90%;
             animation: fadeInUp 1s 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
         }
         @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(34px); filter: blur(14px); }
-            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(34px);
+                filter: blur(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
         }
         .hero__scroll-indicator {
             position: absolute;
@@ -437,15 +537,19 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            animation: fadeInUp 1s 0.9s both;
+            animation: fadeInUp 1s 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
             cursor: pointer;
             background: none;
             border: none;
             color: var(--text-all);
             font-family: inherit;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             letter-spacing: 0.08em;
+            font-weight: 400;
             transition: all var(--transition-fast);
+        }
+        .hero__scroll-indicator:hover {
+            font-weight: 600;
         }
         .scroll-line {
             width: 1px;
@@ -454,13 +558,20 @@
             animation: scrollLinePulse 2.5s ease-in-out infinite;
         }
         @keyframes scrollLinePulse {
-            0%,100% { opacity: 0.3; transform: scaleY(0.65); }
-            50% { opacity: 1; transform: scaleY(1); }
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(0.65);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
         }
 
-        /* 通用区域 */
+        /* ============ 通用区域 ============ */
         .section {
-            padding: 80px 0;
+            padding: 100px 0;
             position: relative;
         }
         .section__label {
@@ -471,13 +582,21 @@
             margin-bottom: 26px;
             font-weight: 600;
         }
+        .section__title {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            color: var(--text-all);
+            margin-bottom: 42px;
+            letter-spacing: 0.04em;
+            line-height: 1.3;
+        }
 
-        /* 卡片 */
+        /* ============ 卡片 ============ */
         .glass-card {
             background: rgba(1, 27, 110, 0.4);
             border: 1px solid rgba(164, 226, 198, 0.1);
             border-radius: 22px;
-            padding: 40px 32px;
+            padding: 50px 46px;
             transition: all var(--transition-medium);
         }
         .glass-card:hover {
@@ -486,15 +605,22 @@
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
             transform: translateY(-2px);
         }
+
         .glass-card__text {
-            font-size: 1.02rem;
-            line-height: 1.8;
+            font-size: 1.06rem;
+            line-height: 1.95;
             color: var(--text-all);
+            letter-spacing: 0.02em;
+            font-weight: 400;
         }
         .glass-card__text p {
             margin-bottom: 20px;
         }
+        .glass-card__text p:last-child {
+            margin-bottom: 0;
+        }
         .glass-card__highlight {
+            color: var(--text-all);
             font-weight: 700;
             position: relative;
             display: inline-block;
@@ -508,9 +634,15 @@
             height: 3px;
             background: rgba(244, 234, 197, 0.35);
             border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        .glass-card__highlight:hover::after {
+            background: rgba(244, 234, 197, 0.65);
+            height: 6px;
+            bottom: 1px;
         }
 
-        /* 作品集网格 */
+        /* ============ 作品集网格 ============ */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -524,7 +656,12 @@
             transition: all var(--transition-medium);
             cursor: pointer;
         }
-        .portfolio-item:active { transform: scale(0.98); }
+        .portfolio-item:hover {
+            background: rgba(1, 33, 130, 0.5);
+            border-color: rgba(164, 226, 198, 0.3);
+            box-shadow: 0 8px 36px rgba(0, 0, 0, 0.35);
+            transform: translateY(-3px);
+        }
         .portfolio-item__image {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -533,21 +670,17 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
         }
+        /* 去掉原来的菱形装饰 */
         .portfolio-item__image::after {
-            content: '';
-            position: absolute;
-            width: 36px;
-            height: 36px;
-            background: rgba(164, 226, 198, 0.15);
-            border: 1px solid rgba(164, 226, 198, 0.3);
-            transform: rotate(45deg);
-            border-radius: 3px;
-            transition: all var(--transition-medium);
+            display: none;
         }
-        .portfolio-item:hover .portfolio-item__image::after {
-            background: rgba(164, 226, 198, 0.3);
-            transform: rotate(45deg) scale(1.15);
+        .portfolio-item__img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
         .portfolio-item__info {
             padding: 22px 24px;
@@ -555,15 +688,17 @@
         .portfolio-item__title {
             font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .portfolio-item__desc {
-            font-size: 0.82rem;
-            line-height: 1.5;
+            color: var(--text-all);
+            letter-spacing: 0.03em;
+            margin-bottom: 0;
         }
 
+        /* 经历列表 */
         .exp-list {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
         }
         .exp-item {
             display: flex;
@@ -571,19 +706,43 @@
             gap: 24px;
             padding: 17px 0;
             border-bottom: 1px solid rgba(164, 226, 198, 0.06);
+            transition: all var(--transition-fast);
+            border-radius: 4px;
         }
-        .exp-item:last-child { border-bottom: none; }
+        .exp-item:last-child {
+            border-bottom: none;
+        }
+        .exp-item:hover {
+            padding-left: 10px;
+            border-bottom-color: rgba(164, 226, 198, 0.3);
+            background: rgba(244, 234, 197, 0.03);
+            border-radius: 6px;
+        }
         .exp-item__year {
             font-size: 0.8rem;
+            color: var(--text-all);
             letter-spacing: 0.07em;
             font-weight: 600;
             min-width: 70px;
+            flex-shrink: 0;
         }
         .exp-item__content {
             font-size: 0.96rem;
+            color: var(--text-all);
+            letter-spacing: 0.02em;
             line-height: 1.6;
+            font-weight: 400;
         }
-        .exp-item__title { font-weight: 700; display: block; }
+        .exp-item__title {
+            font-weight: 700;
+            color: var(--text-all);
+            display: block;
+        }
+        .exp-item__detail {
+            color: var(--text-all);
+            font-weight: 400;
+            font-size: 0.84rem;
+        }
 
         /* 联系区域 */
         .contact-row {
@@ -593,13 +752,13 @@
             align-items: center;
             justify-content: center;
         }
-        .contact-link, .contact-info-btn {
+        .contact-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
             color: var(--text-all);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             letter-spacing: 0.04em;
             transition: all var(--transition-fast);
@@ -607,148 +766,245 @@
             border-radius: 26px;
             background: rgba(1, 38, 150, 0.22);
             border: 1px solid rgba(164, 226, 198, 0.12);
-            cursor: pointer;
         }
-        .contact-link:hover, .contact-info-btn:hover {
-            background: rgba(1, 38, 150, 0.45);
-            transform: translateY(-2px);
+        .contact-link:hover {
+            background: rgba(1, 38, 150, 0.4);
+            border-color: rgba(164, 226, 198, 0.4);
+            font-weight: 700;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
         }
-        .contact-link__dot, .contact-info-btn__dot {
+        .contact-link__dot {
             width: 7px;
             height: 7px;
             border-radius: 50%;
             background: var(--accent-pale);
+            flex-shrink: 0;
         }
-
-        /* 微信弹窗 */
-        .wechat-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            display: flex;
+        .contact-info {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.2s, opacity 0.25s ease;
-        }
-        .wechat-modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .wechat-card {
-            background: rgba(10, 25, 60, 0.95);
-            border: 1px solid rgba(164, 226, 198, 0.4);
-            border-radius: 32px;
-            padding: 28px 24px 36px;
-            max-width: 320px;
-            width: 85%;
-            text-align: center;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
-            animation: modalFadeIn 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        @keyframes modalFadeIn {
-            from { transform: scale(0.92); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .wechat-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .qrcode-placeholder {
-            width: 160px;
-            height: 160px;
-            margin: 16px auto;
-            background: #ffffff;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 0 2px var(--accent-pale);
-        }
-        .qrcode-sim {
-            background: #f0f0f0;
-            width: 100%;
-            height: 100%;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #012696;
-            font-weight: bold;
-            text-align: center;
-        }
-        .qrcode-sim span:first-child { font-size: 2rem; margin-bottom: 6px; }
-        .wechat-desc {
-            font-size: 0.85rem;
-            margin: 18px 0 12px;
-            line-height: 1.5;
-        }
-        .wechat-link {
-            display: inline-block;
-            background: var(--accent-pale);
-            color: var(--primary-mid-dark);
-            padding: 8px 20px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-        .wechat-close {
-            margin-top: 22px;
-            background: none;
-            border: 1px solid rgba(164,226,198,0.5);
-            padding: 6px 20px;
-            border-radius: 40px;
+            gap: 8px;
             color: var(--text-all);
-            cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            padding: 11px 22px;
+            border-radius: 26px;
+            background: rgba(1, 38, 150, 0.22);
+            border: 1px solid rgba(164, 226, 198, 0.12);
+            text-decoration: none;
+        }
+        .contact-info__dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-pale);
+            flex-shrink: 0;
         }
 
+        /* 页脚 */
         .footer {
             text-align: center;
             padding: 44px 0;
-            font-size: 0.75rem;
+            color: var(--text-all);
+            font-size: 0.8rem;
+            font-weight: 400;
             letter-spacing: 0.07em;
             border-top: 1px solid rgba(164, 226, 198, 0.06);
-            margin-top: 30px;
+            margin-top: 50px;
         }
 
-        /* 响应式 */
+        /* ============ 响应式 ============ */
         @media (max-width: 900px) {
-            .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .portfolio-item__info {
+                padding: 16px 18px;
+            }
+            .portfolio-item__title {
+                font-size: 0.88rem;
+            }
         }
         @media (max-width: 768px) {
-            .main-container { padding: 0 20px; }
-            .nav { padding: 12px 20px; flex-direction: column; align-items: stretch; }
-            .nav__links { justify-content: center; gap: 14px; }
-            .lang-switch { align-self: center; }
-            .glass-card { padding: 28px 18px; }
-            .section { padding: 55px 0; }
-            .exp-item { flex-direction: column; gap: 6px; padding: 14px 0; }
-            .exp-item__year { min-width: auto; }
+            .main-container {
+                padding: 0 24px;
+            }
+            .nav {
+                padding: 12px 20px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .nav__links {
+                gap: 12px;
+                justify-content: center;
+                width: 100%;
+                order: 3;
+            }
+            .nav__logo {
+                font-size: 1.15rem;
+                order: 1;
+            }
+            .nav > div {
+                order: 2;
+                margin-left: auto;
+            }
+            .lang-switch {
+                align-self: center;
+            }
+            .nav__link {
+                font-size: 0.8rem;
+            }
+            .glass-card {
+                padding: 30px 22px;
+                border-radius: 18px;
+            }
+            .glass-card__text {
+                font-size: 0.95rem;
+                line-height: 1.75;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .hero {
+                min-height: 90vh;
+                padding: 100px 16px 60px;
+            }
+            .hero__name {
+                font-size: clamp(2.5rem, 12vw, 5rem);
+            }
+            .exp-item {
+                flex-direction: column;
+                gap: 5px;
+                padding: 15px 0;
+            }
+            .exp-item__year {
+                min-width: auto;
+            }
+            .lang-option {
+                padding: 5px 10px;
+                font-size: 0.72rem;
+            }
+            .contact-row {
+                gap: 10px;
+            }
+            .contact-link,
+            .contact-info {
+                font-size: 0.85rem;
+                padding: 9px 16px;
+            }
+            .loading-logo {
+                top: 30px;
+                left: 24px;
+                font-size: 1.15rem;
+            }
+            .loading-indicator {
+                width: 180px;
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .portfolio-item__image::after {
+                width: 28px;
+                height: 28px;
+            }
         }
         @media (max-width: 540px) {
-            .portfolio-grid { grid-template-columns: 1fr; gap: 16px; }
-            .nav__link { font-size: 0.75rem; }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .portfolio-item__image {
+                aspect-ratio: 5 / 3;
+            }
+            .nav__links {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav {
+                padding: 10px 14px;
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            .nav__links {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .nav__link {
+                font-size: 0.7rem;
+            }
+            .hero {
+                min-height: 80vh;
+                padding: 80px 12px 40px;
+            }
+            .hero__name {
+                font-size: 2.2rem;
+            }
+            .hero__subtitle {
+                font-size: 0.9rem;
+            }
+            .glass-card {
+                padding: 22px 16px;
+                border-radius: 15px;
+            }
+            .section__title {
+                font-size: 1.4rem;
+            }
+            .lang-switch {
+                gap: 2px;
+            }
+            .lang-option {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            .loading-logo {
+                top: 22px;
+                left: 16px;
+                font-size: 1rem;
+            }
+            .loading-indicator {
+                width: 140px;
+            }
+            .portfolio-item__image::after {
+                width: 24px;
+                height: 24px;
+            }
+            .portfolio-item__info {
+                padding: 14px 16px;
+            }
+            .contact-link,
+            .contact-info {
+                font-size: 0.78rem;
+                padding: 8px 14px;
+            }
+            .contact-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .contact-link,
+            .contact-info {
+                text-align: center;
+                justify-content: center;
+            }
         }
 
-        /* 滚动显示动画 */
+        /* 滚动揭示动画 */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(36px);
-            filter: blur(14px);
-            transition: opacity 1s cubic-bezier(0.22, 0.61, 0.36, 1),
-                        transform 1s cubic-bezier(0.22, 0.61, 0.36, 1),
-                        filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+            filter: blur(16px);
+            transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+                filter 1.3s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
         .reveal-on-scroll--visible {
             opacity: 1;
@@ -758,20 +1014,32 @@
     </style>
 </head>
 <body>
+
+    <!-- 自定义光标 -->
     <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+
+    <!-- 加载页面 -->
     <div class="loading-screen" id="loadingScreen">
         <span class="loading-logo">yrenk</span>
-        <div class="loading-indicator"><div class="loading-bar"></div></div>
+        <div class="loading-indicator">
+            <div class="loading-bar"></div>
+        </div>
     </div>
+
+    <!-- 背景光斑 -->
     <div class="bg-orbs" aria-hidden="true">
-        <div class="bg-orb bg-orb--1"></div><div class="bg-orb bg-orb--2"></div>
-        <div class="bg-orb bg-orb--3"></div><div class="bg-orb bg-orb--4"></div>
+        <div class="bg-orb bg-orb--1"></div>
+        <div class="bg-orb bg-orb--2"></div>
+        <div class="bg-orb bg-orb--3"></div>
+        <div class="bg-orb bg-orb--4"></div>
     </div>
+    <!-- 纹理 -->
     <div class="bg-texture" aria-hidden="true"></div>
 
+    <!-- 导航栏 -->
     <nav class="nav" id="nav">
         <a href="#hero" class="nav__logo">yrenk</a>
-        <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:center;">
+        <div style="display:flex;align-items:center;gap:20px;">
             <ul class="nav__links">
                 <li><a href="#about" class="nav__link" data-zh="关于" data-en="About">关于</a></li>
                 <li><a href="#portfolio" class="nav__link" data-zh="作品集" data-en="Portfolio">作品集</a></li>
@@ -780,22 +1048,25 @@
                 <li><a href="#inspiration" class="nav__link" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</a></li>
                 <li><a href="#contact" class="nav__link" data-zh="联系" data-en="Contact">联系</a></li>
             </ul>
-            <div class="lang-switch" id="langSwitch" role="button" tabindex="0">
-                <button class="lang-option lang-option--active" data-lang="zh">中</button>
-                <button class="lang-option" data-lang="en">EN</button>
+            <div class="lang-switch" id="langSwitch" title="切换语言 / Switch Language" role="button" tabindex="0" aria-label="切换语言">
+                <button class="lang-option lang-option--active" data-lang="zh" aria-pressed="true">中</button>
+                <button class="lang-option" data-lang="en" aria-pressed="false">EN</button>
             </div>
         </div>
     </nav>
 
     <div class="main-container">
+        <!-- Hero -->
         <section class="hero" id="hero">
             <h1 class="hero__name hero__name--motion-blur">yrenk</h1>
             <p class="hero__subtitle" data-zh="艺术家 / 设计师 — 探索模糊与清晰的边界" data-en="Artist / Designer — Exploring the edge between blur & clarity">艺术家 / 设计师 — 探索模糊与清晰的边界</p>
-            <button class="hero__scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
-                <span class="scroll-line"></span><span data-zh="向下探索" data-en="Scroll Down">向下探索</span>
+            <button class="hero__scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" aria-label="向下滚动">
+                <span class="scroll-line"></span>
+                <span data-zh="向下探索" data-en="Scroll Down">向下探索</span>
             </button>
         </section>
 
+        <!-- 关于 -->
         <section class="section" id="about">
             <p class="section__label reveal-on-scroll" data-zh="关于" data-en="About">关于</p>
             <div class="glass-card reveal-on-scroll">
@@ -808,172 +1079,347 @@
             </div>
         </section>
 
+        <!-- 作品集 -->
         <section class="section" id="portfolio">
             <p class="section__label reveal-on-scroll" data-zh="作品集" data-en="Portfolio">作品集</p>
             <div class="portfolio-grid reveal-on-scroll">
-                <div class="portfolio-item"><div class="portfolio-item__image"></div><div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="光影雕刻" data-en="Light & Shadow Carving">光影雕刻</div><div class="portfolio-item__desc" data-zh="光线与空间的探索实验。" data-en="Exploration of light and space.">光线与空间的探索实验。</div></div></div>
-                <div class="portfolio-item"><div class="portfolio-item__image"></div><div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="角落叙事" data-en="Corner Narratives">角落叙事</div><div class="portfolio-item__desc" data-zh="城市中被忽略的安静角落。" data-en="Quiet overlooked corners.">城市中被忽略的安静角落。</div></div></div>
-                <div class="portfolio-item"><div class="portfolio-item__image"></div><div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="旧梦系列" data-en="Old Dreams Series">旧梦系列</div><div class="portfolio-item__desc" data-zh="记忆碎片视觉重构。" data-en="Visual reconstruction of memories.">记忆碎片视觉重构。</div></div></div>
-                <div class="portfolio-item"><div class="portfolio-item__image"></div><div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="安静空间" data-en="Quiet Spaces">安静空间</div><div class="portfolio-item__desc" data-zh="为沉思而设计的空间装置。" data-en="Spatial installation for contemplation.">为沉思而设计的空间装置。</div></div></div>
-            </div>
-        </section>
-
-        <section class="section" id="experience">
-            <p class="section__label reveal-on-scroll" data-zh="经历" data-en="Experience">经历</p>
-            <div class="glass-card reveal-on-scroll">
-                <ul class="exp-list"><li class="exp-item"><span class="exp-item__year">——</span><div class="exp-item__content"><span class="exp-item__title" data-zh="更多经历即将呈现" data-en="More experiences coming soon">更多经历即将呈现</span><div class="exp-item__detail" data-zh="保持好奇，步履不停" data-en="Stay curious, keep moving">保持好奇，步履不停</div></div></li></ul>
-            </div>
-        </section>
-
-        <section class="section" id="corner"><p class="section__label reveal-on-scroll" data-zh="小角落" data-en="Corner">小角落</p><div class="glass-card reveal-on-scroll"><div class="glass-card__text"><p data-zh="收集一些灵感碎片、午后光影与旧书店的灰尘气味。" data-en="Collecting fragments of inspiration, afternoon light, and the scent of old bookstores.">收集一些灵感碎片、午后光影与旧书店的灰尘气味。</p></div></div></section>
-        <section class="section" id="inspiration"><p class="section__label reveal-on-scroll" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</p><div class="glass-card reveal-on-scroll"><div class="glass-card__text"><p data-zh="近期痴迷于灰度层次与动态模糊的情感映射。欢迎来信交流。" data-en="Recently obsessed with grayscale layering and emotional mapping through dynamic blur. Let's talk.">近期痴迷于灰度层次与动态模糊的情感映射。欢迎来信交流。</p></div></div></section>
-
-        <section class="section" id="contact">
-            <p class="section__label reveal-on-scroll" data-zh="联系" data-en="Contact">联系</p>
-            <div class="glass-card reveal-on-scroll" style="text-align:center;">
-                <p class="glass-card__text" style="margin-bottom:30px;" data-zh="欢迎合作与交流，随时通过以下方式联系。" data-en="Open to collaboration and conversation. Reach out anytime.">欢迎合作与交流，随时通过以下方式联系。</p>
-                <div class="contact-row">
-                    <a href="mailto:xwkyrenk@163.com" class="contact-link"><span class="contact-link__dot"></span> xwkyrenk@163.com</a>
-                    <a href="weixin://dl/chat?kkkk091515" class="contact-link"><span class="contact-link__dot"></span> WeChat</a>
-                    <button id="openWechatModalBtn" class="contact-info-btn"><span class="contact-info-btn__dot"></span> 公众号：yrenk</button>
+                <!-- 作品 1：书房 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-item__image">
+                        <img src="images/a.png" alt="书房" class="portfolio-item__img">
+                    </div>
+                    <div class="portfolio-item__info">
+                        <div class="portfolio-item__title" data-zh="书房" data-en="Study">书房</div>
+                    </div>
+                </div>
+                <!-- 作品 2：过道 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-item__image">
+                        <img src="images/b.jpg" alt="过道" class="portfolio-item__img">
+                    </div>
+                    <div class="portfolio-item__info">
+                        <div class="portfolio-item__title" data-zh="过道" data-en="Corridor">过道</div>
+                    </div>
+                </div>
+                <!-- 作品 3：角落 -->
+                <div class="portfolio-item">
+                    <div class="portfolio-item__image">
+                        <img src="images/c.png" alt="角落" class="portfolio-item__img">
+                    </div>
+                    <div class="portfolio-item__info">
+                        <div class="portfolio-item__title" data-zh="角落" data-en="Corner">角落</div>
+                    </div>
                 </div>
             </div>
         </section>
-        <footer class="footer"><span>© 2025 yrenk — </span><span data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span></footer>
-    </div>
 
-    <div id="wechatModal" class="wechat-modal">
-        <div class="wechat-card">
-            <div class="wechat-title">✨ yrenk 公众号</div>
-            <div class="qrcode-placeholder"><div class="qrcode-sim"><span>📱</span><span>微信扫一扫</span><small style="font-size:0.6rem;">关注「yrenk」</small></div></div>
-            <div class="wechat-desc" data-zh="长按保存二维码，微信内识别关注 | 日常更新光影与创作思考" data-en="Press and hold to save QR code, follow on WeChat | daily light & creative musings">长按保存二维码，微信内识别关注 | 日常更新光影与创作思考</div>
-            <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=placeholder#wechat_redirect" target="_blank" rel="noopener noreferrer" class="wechat-link" id="wechatOfficialLink">📖 访问公众号主页</a>
-            <button class="wechat-close" id="closeModalBtn">关闭</button>
-        </div>
+        <!-- 经历 -->
+        <section class="section" id="experience">
+            <p class="section__label reveal-on-scroll" data-zh="经历" data-en="Experience">经历</p>
+            <div class="glass-card reveal-on-scroll">
+                <ul class="exp-list">
+                    <!-- 经历内容已清空，等待后续添加 -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- 小角落 -->
+        <section class="section" id="corner">
+            <p class="section__label reveal-on-scroll" data-zh="小角落" data-en="Corner">小角落</p>
+            <div class="glass-card reveal-on-scroll">
+                <div class="glass-card__text">
+                    <p data-zh="" data-en=""></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 灵感讨论 -->
+        <section class="section" id="inspiration">
+            <p class="section__label reveal-on-scroll" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</p>
+            <div class="glass-card reveal-on-scroll">
+                <div class="glass-card__text">
+                    <p data-zh="" data-en=""></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系 -->
+        <section class="section" id="contact">
+            <p class="section__label reveal-on-scroll" data-zh="联系" data-en="Contact">联系</p>
+            <div class="glass-card reveal-on-scroll" style="text-align:center;">
+                <p class="glass-card__text" style="margin-bottom:30px;font-weight:400;" data-zh="欢迎合作与交流，随时通过以下方式联系。" data-en="Open to collaboration and conversation. Reach out anytime.">
+                    欢迎合作与交流，随时通过以下方式联系。
+                </p>
+                <div class="contact-row">
+                    <a href="mailto:xwkyrenk@163.com" class="contact-link">
+                        <span class="contact-link__dot"></span> xwkyrenk@163.com
+                    </a>
+                    <a href="weixin://dl/chat?kkkk091515" class="contact-link">
+                        <span class="contact-link__dot"></span> WeChat
+                    </a>
+                    <!-- 公众号链接：请将 href 替换为你的实际公众号链接 -->
+                    <a href="YOUR_WECHAT_OFFICIAL_ACCOUNT_LINK" class="contact-info" target="_blank">
+                        <span class="contact-info__dot"></span> 公众号：yrenk
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>© 2025 yrenk — </span>
+            <span data-zh="保留所有权利" data-en="All rights reserved">保留所有权利</span>
+        </footer>
     </div>
 
     <script>
-        (function(){
-            // 检测是否为触摸设备（手机/平板），若是则彻底移除自定义光标并恢复系统光标
-            const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-            const cursorEl = document.getElementById('customCursor');
-            if (isTouchDevice && cursorEl) {
-                cursorEl.remove(); // 手机端直接移除小白点元素
+        (function() {
+            // ============ 自定义光标 ============
+            const cursor = document.getElementById('customCursor');
+            let cursorX = window.innerWidth / 2;
+            let cursorY = window.innerHeight / 2;
+            let targetX = cursorX;
+            let targetY = cursorY;
+            let cursorVisible = false;
+            let cursorTicking = false;
+
+            const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+            if (isTouchDevice) {
+                cursor.style.display = 'none';
                 document.documentElement.style.cursor = 'auto';
                 document.body.style.cursor = 'auto';
-            } 
-            else if (cursorEl) {
-                // PC 端: 完全跟手，直接定位无延迟
-                let mouseX = 0, mouseY = 0;
-                const updateCursor = (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                    cursorEl.style.left = mouseX + 'px';
-                    cursorEl.style.top = mouseY + 'px';
-                    // 悬停样式判断
-                    const target = e.target;
-                    const invert = target.closest('a, button, .nav__logo, .lang-switch, .portfolio-item, .contact-link, .contact-info-btn, .hero__name, .hero__scroll-indicator');
-                    if (invert) {
-                        cursorEl.classList.add('custom-cursor--inverted', 'custom-cursor--hover');
-                    } else {
-                        cursorEl.classList.remove('custom-cursor--inverted', 'custom-cursor--hover');
-                    }
-                };
-                document.addEventListener('mousemove', updateCursor);
-                document.addEventListener('mouseleave', () => {
-                    cursorEl.style.opacity = '0';
-                });
-                document.addEventListener('mouseenter', (e) => {
-                    cursorEl.style.opacity = '1';
-                    if (e.clientX && e.clientY) updateCursor(e);
-                });
-                // 初始稍微延迟显示，避免左上角闪现
-                cursorEl.style.opacity = '0';
-                setTimeout(() => { if (cursorEl) cursorEl.style.opacity = '1'; }, 100);
             }
 
-            // 加载页面动画
-            const loadingScreen = document.getElementById('loadingScreen');
-            let loaded = false;
-            const hideLoad = () => {
-                if (loaded) return;
-                loaded = true;
-                loadingScreen.classList.add('loading-screen--fade-out');
-                setTimeout(() => loadingScreen.classList.add('loading-screen--hidden'), 600);
-            };
-            window.addEventListener('load', () => setTimeout(hideLoad, 2000));
-            setTimeout(hideLoad, 3200);
-
-            // 中英文切换
-            const langBtns = document.querySelectorAll('.lang-option');
-            const translatables = document.querySelectorAll('[data-zh][data-en]');
-            let curLang = 'zh';
-            function setLang(lang) {
-                if (curLang === lang) return;
-                curLang = lang;
-                langBtns.forEach(btn => btn.classList.toggle('lang-option--active', btn.getAttribute('data-lang') === lang));
-                translatables.forEach(el => {
-                    const text = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
-                    if (text) el.innerHTML = text;
-                });
-                document.title = lang === 'zh' ? 'yrenk — 艺术家 / 设计师' : 'yrenk — Artist / Designer';
-            }
-            langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang'))));
-            setLang('zh');
-
-            // 滚动渐现动画
-            const reveals = document.querySelectorAll('.reveal-on-scroll');
-            const checkReveal = () => {
-                const ht = window.innerHeight * 0.82;
-                reveals.forEach(el => {
-                    if (el.getBoundingClientRect().top < ht) el.classList.add('reveal-on-scroll--visible');
-                });
-            };
-            window.addEventListener('scroll', checkReveal);
-            checkReveal();
-
-            // 导航栏滚动样式
-            const nav = document.getElementById('nav');
-            window.addEventListener('scroll', () => nav.classList.toggle('nav--scrolled', window.scrollY > 30));
-
-            // 微信公众号弹窗交互
-            const modal = document.getElementById('wechatModal');
-            const openBtn = document.getElementById('openWechatModalBtn');
-            const closeBtn = document.getElementById('closeModalBtn');
-            const officialLink = document.getElementById('wechatOfficialLink');
-            if (openBtn && modal) {
-                openBtn.addEventListener('click', () => modal.classList.add('active'));
-                const closeModal = () => modal.classList.remove('active');
-                closeBtn.addEventListener('click', closeModal);
-                modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-                // 公众号链接提示替换真实地址（目前占位，用户可自行修改）
-                officialLink.addEventListener('click', (e) => {
-                    if (officialLink.href.includes('placeholder')) {
-                        e.preventDefault();
-                        alert('请将公众号链接替换为真实的微信公众号主页地址（mp.weixin.qq.com 开头的 profile_ext 链接）');
-                    }
-                });
+            function updateCursorPosition() {
+                const dx = targetX - cursorX;
+                const dy = targetY - cursorY;
+                const lerpFactor = 0.22;
+                cursorX += dx * lerpFactor;
+                cursorY += dy * lerpFactor;
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                cursorTicking = false;
             }
 
-            // 移动端触摸反馈优化（不影响光标逻辑）
-            const touchItems = document.querySelectorAll('.contact-link, .contact-info-btn, .portfolio-item, .hero__scroll-indicator');
-            touchItems.forEach(el => {
-                el.addEventListener('touchstart', () => { el.style.transform = 'scale(0.97)'; }, { passive: true });
-                el.addEventListener('touchend', () => { el.style.transform = ''; });
+            function requestCursorUpdate() {
+                if (!cursorTicking) {
+                    requestAnimationFrame(() => {
+                        updateCursorPosition();
+                    });
+                    cursorTicking = true;
+                }
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                if (!cursorVisible) {
+                    cursorX = targetX;
+                    cursorY = targetY;
+                    cursor.style.left = cursorX + 'px';
+                    cursor.style.top = cursorY + 'px';
+                    cursor.style.opacity = '1';
+                    cursorVisible = true;
+                }
+                requestCursorUpdate();
+
+                const el = e.target;
+                const shouldInvert =
+                    el.tagName === 'A' ||
+                    el.tagName === 'BUTTON' ||
+                    el.closest('a') ||
+                    el.closest('button') ||
+                    el.closest('.nav__logo') ||
+                    el.closest('.hero__name') ||
+                    el.closest('.lang-switch') ||
+                    el.closest('.portfolio-item') ||
+                    el.closest('.contact-link') ||
+                    el.closest('.contact-info') ||
+                    el.closest('.glass-card__highlight') ||
+                    el.closest('.hero__scroll-indicator');
+
+                if (shouldInvert) {
+                    cursor.classList.add('custom-cursor--inverted');
+                    cursor.classList.add('custom-cursor--hover');
+                } else {
+                    cursor.classList.remove('custom-cursor--inverted');
+                    cursor.classList.remove('custom-cursor--hover');
+                }
             });
 
-            // 动态文字阴影（仅PC）
-            const heroName = document.querySelector('.hero__name');
-            if (heroName && !isTouchDevice) {
-                heroName.addEventListener('mousemove', (e) => {
-                    const rect = heroName.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    const ix = (x / rect.width) * 2, iy = (y / rect.height) * 2;
-                    heroName.style.textShadow = `${ix*24}px ${iy*9}px 12px rgba(244,234,197,0.5), ${ix*38}px ${iy*15}px 24px rgba(244,234,197,0.3)`;
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursorVisible = false;
+                cursor.classList.remove('custom-cursor--inverted', 'custom-cursor--hover');
+            });
+
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorVisible = true;
+            });
+
+            // ============ 加载页面 ============
+            const loadingScreen = document.getElementById('loadingScreen');
+            let loadingHidden = false;
+
+            function hideLoadingScreen() {
+                if (loadingHidden) return;
+                loadingHidden = true;
+                loadingScreen.classList.add('loading-screen--fade-out');
+                loadingScreen.addEventListener('transitionend', function handler() {
+                    loadingScreen.classList.add('loading-screen--hidden');
+                    loadingScreen.removeEventListener('transitionend', handler);
                 });
-                heroName.addEventListener('mouseleave', () => heroName.style.textShadow = 'none');
             }
+
+            const minLoadTime = 2000;
+            const startTime = Date.now();
+            window.addEventListener('load', () => {
+                const elapsed = Date.now() - startTime;
+                const remaining = Math.max(0, minLoadTime - elapsed);
+                setTimeout(hideLoadingScreen, remaining);
+            });
+            setTimeout(() => {
+                if (!loadingHidden) hideLoadingScreen();
+            }, 3500);
+
+            // ============ 导航栏 ============
+            const nav = document.getElementById('nav');
+            const langSwitch = document.getElementById('langSwitch');
+            const langOptions = langSwitch.querySelectorAll('.lang-option');
+            const allTranslatable = document.querySelectorAll('[data-zh][data-en]');
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            const heroName = document.querySelector('.hero__name');
+
+            let currentLang = 'zh';
+            const translationCache = new Map();
+            allTranslatable.forEach(el => {
+                translationCache.set(el, {
+                    zh: el.getAttribute('data-zh'),
+                    en: el.getAttribute('data-en')
+                });
+            });
+
+            function switchLanguage(lang) {
+                if (currentLang === lang) return;
+                currentLang = lang;
+                langOptions.forEach(opt => {
+                    const isActive = opt.getAttribute('data-lang') === lang;
+                    opt.classList.toggle('lang-option--active', isActive);
+                    opt.setAttribute('aria-pressed', isActive);
+                });
+                allTranslatable.forEach(el => {
+                    const cached = translationCache.get(el);
+                    if (cached && cached[lang]) {
+                        el.innerHTML = cached[lang];
+                    }
+                });
+                document.title = lang === 'zh' ? 'yrenk — 艺术家 / 设计师' : 'yrenk — Artist / Designer';
+                document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+            }
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    switchLanguage(option.getAttribute('data-lang'));
+                });
+            });
+            langSwitch.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh');
+                }
+            });
+
+            let scrollTicking = false;
+
+            function updateNavScroll() {
+                nav.classList.toggle('nav--scrolled', window.scrollY > 30);
+                scrollTicking = false;
+            }
+            window.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    requestAnimationFrame(() => {
+                        updateNavScroll();
+                        checkRevealElements();
+                    });
+                    scrollTicking = true;
+                }
+            }, { passive: true });
+
+            function checkRevealElements() {
+                const triggerPoint = window.innerHeight * 0.82;
+                revealElements.forEach(el => {
+                    if (el.getBoundingClientRect().top < triggerPoint) {
+                        el.classList.add('reveal-on-scroll--visible');
+                    }
+                });
+            }
+            setTimeout(checkRevealElements, 400);
+
+            // 鼠标影响光斑
+            let mx = 0,
+                my = 0,
+                tmx = 0,
+                tmy = 0,
+                mt = false;
+            document.addEventListener('mousemove', (e) => {
+                tmx = e.clientX;
+                tmy = e.clientY;
+                if (!mt) {
+                    requestAnimationFrame(() => {
+                        mx += (tmx - mx) * 0.07;
+                        my += (tmy - my) * 0.07;
+                        const cx = window.innerWidth / 2;
+                        const cy = window.innerHeight / 2;
+                        const ox = (mx - cx) / cx;
+                        const oy = (my - cy) / cy;
+                        const orbs = document.querySelectorAll('.bg-orb');
+                        if (orbs[0]) orbs[0].style.transform = `translate(${ox*16}px, ${oy*16}px)`;
+                        if (orbs[1]) orbs[1].style.transform = `translate(${-ox*22}px, ${-oy*22}px)`;
+                        if (orbs[2]) orbs[2].style.transform = `translate(${ox*11}px, ${-oy*13}px)`;
+                        if (orbs[3]) orbs[3].style.transform = `translate(${-ox*19}px, ${oy*11}px)`;
+                        mt = false;
+                    });
+                    mt = true;
+                }
+            }, { passive: true });
+
+            // Hero名字动态模糊
+            if (heroName) {
+                heroName.addEventListener('mousemove', (e) => {
+                    const r = heroName.getBoundingClientRect();
+                    const x = e.clientX - r.left - r.width / 2;
+                    const y = e.clientY - r.top - r.height / 2;
+                    const ix = (x / r.width) * 2;
+                    const iy = (y / r.height) * 2;
+                    const ba = Math.abs(ix) * 20 + 5;
+                    heroName.style.textShadow = `
+                ${ix*24}px ${iy*9}px ${ba}px rgba(244,234,197,0.5),
+                ${ix*38}px ${iy*15}px ${ba*1.6}px rgba(244,234,197,0.28),
+                ${-ix*17}px ${-iy*8}px ${ba*0.85}px rgba(244,234,197,0.3)
+              `;
+                });
+                heroName.addEventListener('mouseleave', () => {
+                    heroName.style.textShadow = '0 0 0 transparent';
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                    e.preventDefault();
+                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh');
+                }
+            });
+
+            console.log('%c yrenk %c personal site ',
+                'font-size:1.5em;font-weight:700;color:#F4EAC5;letter-spacing:0.06em;',
+                'font-size:0.9em;color:#F4EAC5;');
+            console.log('%c字体统一#F4EAC5 · 仅靠粗细大小区分层次 %c| %cCtrl+L 切换语言',
+                'color:#F4EAC5;', '', 'color:#F4EAC5;font-size:0.85em;');
+
+            checkRevealElements();
+            window.switchLanguage = switchLanguage;
+            window.getCurrentLang = () => currentLang;
         })();
     </script>
 </body>
