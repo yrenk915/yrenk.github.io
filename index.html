@@ -531,130 +531,143 @@
             font-weight: 500;
         }
 
-        /* ============ 文件夹系统（带预览） ============ */
-        .folder-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* 作品集网格（卡片式预览） */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
         }
-        .folder-item {
-            background: rgba(1, 27, 110, 0.35);
+        .portfolio-card {
+            background: rgba(1, 27, 110, 0.3);
             border: 1px solid rgba(164, 226, 198, 0.08);
             border-radius: 18px;
             overflow: hidden;
+            cursor: pointer;
             transition: all 0.45s var(--transition-smooth);
         }
-        .folder-item:hover {
+        .portfolio-card:hover {
             background: rgba(1, 33, 130, 0.48);
-            border-color: rgba(164, 226, 198, 0.22);
-            box-shadow: 0 6px 32px rgba(0, 0, 0, 0.35);
+            border-color: rgba(164, 226, 198, 0.25);
+            box-shadow: 0 8px 36px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
         }
-        /* 头部 */
-        .folder-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 28px 0 28px;
-            cursor: pointer;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            transition: padding 0.4s var(--transition-smooth);
-        }
-        .folder-item--open .folder-header {
-            padding-bottom: 6px;
-        }
-        .folder-title {
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            color: var(--text-all);
-        }
-        .folder-arrow {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            transition: transform 0.45s var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .folder-arrow svg {
+        .portfolio-card__preview {
             width: 100%;
-            height: 100%;
-            stroke: var(--text-all);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        .folder-item--open .folder-arrow {
-            transform: rotate(180deg);
-        }
-        /* 预览图（折叠时可见） */
-        .folder-preview {
-            padding: 12px 28px 20px 28px;
-            cursor: pointer;
-            transition: all 0.4s var(--transition-smooth);
-        }
-        .folder-item--open .folder-preview {
-            padding-top: 0;
-            padding-bottom: 0;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            margin: 0;
-        }
-        .folder-preview-img-wrap {
-            width: 100%;
-            height: 130px;
-            border-radius: 10px;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
             background: linear-gradient(160deg, rgba(1, 28, 95, 0.85) 0%, rgba(1, 36, 125, 0.5) 100%);
             position: relative;
         }
-        .folder-preview-img {
+        .portfolio-card__preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             transition: transform 0.6s ease;
         }
-        .folder-item:hover .folder-preview-img {
-            transform: scale(1.03);
+        .portfolio-card:hover .portfolio-card__preview img {
+            transform: scale(1.04);
         }
-        /* 展开后的完整内容 */
-        .folder-body {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.55s var(--transition-smooth);
+        .portfolio-card__info {
+            padding: 20px 24px;
         }
-        .folder-item--open .folder-body {
-            grid-template-rows: 1fr;
+        .portfolio-card__title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--text-all);
         }
-        .folder-content {
-            overflow: hidden;
+        .portfolio-card__count {
+            font-size: 0.72rem;
+            color: var(--accent-pale);
+            margin-top: 4px;
+            opacity: 0.8;
         }
-        .folder-content-inner {
-            padding: 0 28px 24px 28px;
+
+        /* 画廊模态窗口 */
+        .gallery-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 10, 30, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s var(--transition-smooth);
+        }
+        .gallery-overlay--visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .gallery-container {
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: rgba(1, 27, 110, 0.45);
+            border: 1px solid rgba(164, 226, 198, 0.15);
+            border-radius: 24px;
+            padding: 40px 36px;
+            position: relative;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-lighter) transparent;
+        }
+        .gallery-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .gallery-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .gallery-container::-webkit-scrollbar-thumb {
+            background: var(--primary-lighter);
+            border-radius: 2px;
+        }
+        .gallery-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-all);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--transition-smooth);
+            line-height: 1;
+        }
+        .gallery-close:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .gallery-images {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 32px;
+            margin-top: 10px;
         }
-        .folder-image-wrap {
+        .gallery-image-wrap {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             background: linear-gradient(160deg, rgba(1, 28, 95, 0.85) 0%, rgba(1, 36, 125, 0.5) 100%);
-            mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
         }
-        .folder-image {
+        .gallery-image-wrap img {
             width: 100%;
             height: auto;
-            max-height: 65vh;
-            object-fit: contain;
             display: block;
-            animation: imageSlowDrift 28s ease-in-out infinite both;
+            object-fit: contain;
+            animation: imageSlowDrift 30s ease-in-out infinite both;
         }
         @keyframes imageSlowDrift {
             0%,
@@ -662,17 +675,14 @@
                 transform: scale(1) translateY(0);
             }
             25% {
-                transform: scale(1.02) translateY(-2px);
+                transform: scale(1.02) translateY(-3px);
             }
             50% {
-                transform: scale(1.005) translateY(1px);
+                transform: scale(1.005) translateY(2px);
             }
             75% {
-                transform: scale(1.03) translateY(-1px);
+                transform: scale(1.03) translateY(-2px);
             }
-        }
-        .folder-item:hover .folder-image {
-            animation-duration: 14s;
         }
 
         /* 评论区 */
@@ -776,7 +786,6 @@
             min-height: 60px;
         }
 
-        /* 联系 */
         .contact-row {
             display: flex;
             flex-wrap: wrap;
@@ -850,23 +859,22 @@
         .reveal-on-scroll--visible {
             animation: revealBlurSlide 1.2s var(--transition-smooth) both;
         }
-        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(1) {
-            animation: revealBlurSlide 0.8s 0s var(--transition-smooth) both;
+        .portfolio-grid.reveal-on-scroll--visible .portfolio-card:nth-child(1) {
+            animation: revealBlurSlide 0.9s 0s var(--transition-smooth) both;
         }
-        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(2) {
-            animation: revealBlurSlide 0.8s 0.1s var(--transition-smooth) both;
+        .portfolio-grid.reveal-on-scroll--visible .portfolio-card:nth-child(2) {
+            animation: revealBlurSlide 0.9s 0.12s var(--transition-smooth) both;
         }
-        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(3) {
-            animation: revealBlurSlide 0.8s 0.2s var(--transition-smooth) both;
-        }
-        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(4) {
-            animation: revealBlurSlide 0.8s 0.3s var(--transition-smooth) both;
-        }
-        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(5) {
-            animation: revealBlurSlide 0.8s 0.4s var(--transition-smooth) both;
+        .portfolio-grid.reveal-on-scroll--visible .portfolio-card:nth-child(3) {
+            animation: revealBlurSlide 0.9s 0.24s var(--transition-smooth) both;
         }
 
         /* 响应式 */
+        @media (max-width: 900px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
         @media (max-width: 860px) {
             .main-container {
                 padding: 0 32px;
@@ -904,26 +912,18 @@
             .section {
                 padding: 60px 0;
             }
-            .folder-header {
-                padding: 18px 22px 0 22px;
-            }
-            .folder-preview {
-                padding: 10px 22px 18px 22px;
-            }
-            .folder-preview-img-wrap {
-                height: 110px;
-            }
-            .folder-content-inner {
-                padding: 0 22px 20px 22px;
-            }
-            .folder-list {
-                gap: 16px;
-            }
             .glass-card {
                 padding: 32px 24px;
             }
+            .gallery-container {
+                padding: 30px 24px;
+            }
         }
         @media (max-width: 600px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
             .main-container {
                 padding: 0 20px;
             }
@@ -966,23 +966,24 @@
             .section {
                 padding: 45px 0;
             }
-            .folder-header {
-                padding: 14px 16px 0 16px;
+            .glass-card {
+                padding: 24px 18px;
             }
-            .folder-preview {
-                padding: 8px 16px 14px 16px;
+            .portfolio-card__info {
+                padding: 14px 16px;
             }
-            .folder-preview-img-wrap {
-                height: 90px;
-            }
-            .folder-content-inner {
-                padding: 0 16px 16px 16px;
-            }
-            .folder-title {
+            .portfolio-card__title {
                 font-size: 0.88rem;
             }
-            .folder-list {
-                gap: 12px;
+            .gallery-container {
+                padding: 24px 16px;
+                border-radius: 18px;
+            }
+            .gallery-close {
+                width: 30px;
+                height: 30px;
+                top: 10px;
+                right: 12px;
             }
             .contact-row {
                 flex-direction: column;
@@ -1011,9 +1012,6 @@
             .comments-toggle {
                 font-size: 0.8rem;
                 padding: 10px 18px;
-            }
-            .glass-card {
-                padding: 24px 18px;
             }
         }
         @media (max-width: 400px) {
@@ -1045,21 +1043,15 @@
                 width: 100%;
                 justify-content: center;
             }
-            .folder-preview-img-wrap {
-                height: 75px;
-            }
         }
     </style>
 </head>
 <body>
-
     <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
-
     <div class="loading-screen" id="loadingScreen">
         <span class="loading-logo">yrenk</span>
         <div class="loading-indicator"><div class="loading-bar"></div></div>
     </div>
-
     <div class="bg-orbs" aria-hidden="true">
         <div class="bg-orb bg-orb--1"></div>
         <div class="bg-orb bg-orb--2"></div>
@@ -1087,9 +1079,7 @@
     <div class="main-container">
         <section class="hero" id="hero">
             <div class="hero__inner">
-                <div class="hero__logo-wrap">
-                    <img src="images/logo.webp" alt="yrenk" class="hero__logo-img" loading="eager">
-                </div>
+                <div class="hero__logo-wrap"><img src="images/logo.webp" alt="yrenk" class="hero__logo-img" loading="eager"></div>
                 <div class="hero__divider"></div>
                 <div class="hero__text">
                     <p class="hero__line hero__line--bold">偏爱角落，也雕琢光影。</p>
@@ -1105,117 +1095,45 @@
         <!-- 作品集 -->
         <section class="section" id="portfolio">
             <p class="section__label reveal-on-scroll" data-zh="作品集" data-en="Portfolio">作品集</p>
-            <div class="folder-list reveal-on-scroll">
+            <div class="portfolio-grid reveal-on-scroll">
                 <!-- 书房 -->
-                <div class="folder-item">
-                    <div class="folder-header" onclick="toggleFolder(this)">
-                        <span class="folder-title" data-zh="书房" data-en="Study">书房</span>
-                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                <div class="portfolio-card" data-images="images/a.webp" onclick="openGallery(this)" data-zh-title="书房" data-en-title="Study">
+                    <div class="portfolio-card__preview">
+                        <img src="images/a.webp" alt="书房" loading="lazy">
                     </div>
-                    <div class="folder-preview" onclick="toggleFolder(this.closest('.folder-item').querySelector('.folder-header'))">
-                        <div class="folder-preview-img-wrap">
-                            <img src="images/a.webp" alt="书房预览" class="folder-preview-img" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="folder-body">
-                        <div class="folder-content">
-                            <div class="folder-content-inner">
-                                <div class="folder-image-wrap">
-                                    <img src="images/a.webp" alt="书房" class="folder-image" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="portfolio-card__info">
+                        <div class="portfolio-card__title" data-zh="书房" data-en="Study">书房</div>
+                        <div class="portfolio-card__count" data-zh="1 张图片" data-en="1 image">1 张图片</div>
                     </div>
                 </div>
                 <!-- 过道 -->
-                <div class="folder-item">
-                    <div class="folder-header" onclick="toggleFolder(this)">
-                        <span class="folder-title" data-zh="过道" data-en="Corridor">过道</span>
-                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                <div class="portfolio-card" data-images="images/b.webp" onclick="openGallery(this)" data-zh-title="过道" data-en-title="Corridor">
+                    <div class="portfolio-card__preview">
+                        <img src="images/b.webp" alt="过道" loading="lazy">
                     </div>
-                    <div class="folder-preview" onclick="toggleFolder(this.closest('.folder-item').querySelector('.folder-header'))">
-                        <div class="folder-preview-img-wrap">
-                            <img src="images/b.webp" alt="过道预览" class="folder-preview-img" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="folder-body">
-                        <div class="folder-content">
-                            <div class="folder-content-inner">
-                                <div class="folder-image-wrap">
-                                    <img src="images/b.webp" alt="过道" class="folder-image" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="portfolio-card__info">
+                        <div class="portfolio-card__title" data-zh="过道" data-en="Corridor">过道</div>
+                        <div class="portfolio-card__count" data-zh="1 张图片" data-en="1 image">1 张图片</div>
                     </div>
                 </div>
-                <!-- 角落 -->
-                <div class="folder-item">
-                    <div class="folder-header" onclick="toggleFolder(this)">
-                        <span class="folder-title" data-zh="角落" data-en="Corner">角落</span>
-                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                <!-- 角落（合集） -->
+                <div class="portfolio-card" data-images="images/c.webp,images/d.webp,images/e.webp" onclick="openGallery(this)" data-zh-title="角落" data-en-title="Corner">
+                    <div class="portfolio-card__preview">
+                        <img src="images/c.webp" alt="角落" loading="lazy">
                     </div>
-                    <div class="folder-preview" onclick="toggleFolder(this.closest('.folder-item').querySelector('.folder-header'))">
-                        <div class="folder-preview-img-wrap">
-                            <img src="images/c.webp" alt="角落预览" class="folder-preview-img" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="folder-body">
-                        <div class="folder-content">
-                            <div class="folder-content-inner">
-                                <div class="folder-image-wrap">
-                                    <img src="images/c.webp" alt="角落" class="folder-image" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="portfolio-card__info">
+                        <div class="portfolio-card__title" data-zh="角落" data-en="Corner">角落</div>
+                        <div class="portfolio-card__count" data-zh="3 张图片" data-en="3 images">3 张图片</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 小角落 -->
+        <!-- 小角落（保留空白区域） -->
         <section class="section" id="corner">
             <p class="section__label reveal-on-scroll" data-zh="小角落" data-en="Corner">小角落</p>
-            <div class="folder-list reveal-on-scroll">
-                <div class="folder-item">
-                    <div class="folder-header" onclick="toggleFolder(this)">
-                        <span class="folder-title" data-zh="角落·壹" data-en="Corner I">角落·壹</span>
-                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                    </div>
-                    <div class="folder-preview" onclick="toggleFolder(this.closest('.folder-item').querySelector('.folder-header'))">
-                        <div class="folder-preview-img-wrap">
-                            <img src="images/d.webp" alt="角落·壹预览" class="folder-preview-img" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="folder-body">
-                        <div class="folder-content">
-                            <div class="folder-content-inner">
-                                <div class="folder-image-wrap">
-                                    <img src="images/d.webp" alt="角落·壹" class="folder-image" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="folder-item">
-                    <div class="folder-header" onclick="toggleFolder(this)">
-                        <span class="folder-title" data-zh="角落·贰" data-en="Corner II">角落·贰</span>
-                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-                    </div>
-                    <div class="folder-preview" onclick="toggleFolder(this.closest('.folder-item').querySelector('.folder-header'))">
-                        <div class="folder-preview-img-wrap">
-                            <img src="images/e.webp" alt="角落·贰预览" class="folder-preview-img" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="folder-body">
-                        <div class="folder-content">
-                            <div class="folder-content-inner">
-                                <div class="folder-image-wrap">
-                                    <img src="images/e.webp" alt="角落·贰" class="folder-image" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="glass-card reveal-on-scroll" style="text-align:center;">
+                <p style="font-size:1.05rem;line-height:2;color:var(--text-all);letter-spacing:0.025em;opacity:0.7;" data-zh="更多作品即将呈现" data-en="More works coming soon">更多作品即将呈现</p>
             </div>
         </section>
 
@@ -1233,7 +1151,21 @@
                     <div class="comments-collapse-wrapper" id="commentsCollapseWrapper">
                         <div class="comments-collapse-inner">
                             <div class="comments-content" id="commentsContent">
-                                <script src="https://giscus.app/client.js" data-repo="yrenk915/yrenk.github.io" data-repo-id="R_kgDOSzmaBw" data-category="Announcements" data-category-id="DIC_kwDOSzmaB84C-wte" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async>
+                                <script src="https://giscus.app/client.js"
+                                        data-repo="yrenk915/yrenk.github.io"
+                                        data-repo-id="R_kgDOSzmaBw"
+                                        data-category="Announcements"
+                                        data-category-id="DIC_kwDOSzmaB84C-wte"
+                                        data-mapping="pathname"
+                                        data-strict="0"
+                                        data-reactions-enabled="1"
+                                        data-emit-metadata="0"
+                                        data-input-position="bottom"
+                                        data-theme="preferred_color_scheme"
+                                        data-lang="zh-CN"
+                                        data-loading="lazy"
+                                        crossorigin="anonymous"
+                                        async>
                                 </script>
                             </div>
                         </div>
@@ -1260,6 +1192,14 @@
         </footer>
     </div>
 
+    <!-- 画廊弹窗 -->
+    <div class="gallery-overlay" id="galleryOverlay" onclick="closeGallery()">
+        <div class="gallery-container" id="galleryContainer" onclick="event.stopPropagation()">
+            <button class="gallery-close" onclick="closeGallery()">✕</button>
+            <div class="gallery-images" id="galleryImages"></div>
+        </div>
+    </div>
+
     <script>
         (function() {
             const cursor = document.getElementById('customCursor');
@@ -1270,55 +1210,82 @@
                 cursorVisible = false,
                 cursorTicking = false;
             const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-            if (isTouchDevice) { cursor.style.display = 'none';
+            if (isTouchDevice) {
+                cursor.style.display = 'none';
                 document.documentElement.style.cursor = 'auto';
-                document.body.style.cursor = 'auto'; }
+                document.body.style.cursor = 'auto';
+            }
 
-            function updateCursorPosition() { const dx = targetX - cursorX,
+            function updateCursorPosition() {
+                const dx = targetX - cursorX,
                     dy = targetY - cursorY;
                 cursorX += dx * 0.2;
                 cursorY += dy * 0.2;
                 cursor.style.left = cursorX + 'px';
                 cursor.style.top = cursorY + 'px';
-                cursorTicking = false; }
+                cursorTicking = false;
+            }
 
-            function requestCursorUpdate() { if (!cursorTicking) { requestAnimationFrame(() => { updateCursorPosition(); });
-                    cursorTicking = true; } }
-            document.addEventListener('mousemove', (e) => { targetX = e.clientX;
-                targetY = e.clientY; if (!cursorVisible) { cursorX = targetX;
+            function requestCursorUpdate() {
+                if (!cursorTicking) {
+                    requestAnimationFrame(() => { updateCursorPosition(); });
+                    cursorTicking = true;
+                }
+            }
+            document.addEventListener('mousemove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+                if (!cursorVisible) {
+                    cursorX = targetX;
                     cursorY = targetY;
                     cursor.style.left = cursorX + 'px';
                     cursor.style.top = cursorY + 'px';
                     cursor.style.opacity = '1';
-                    cursorVisible = true; }
-                requestCursorUpdate(); const el = e.target; const shouldInvert = el.tagName === 'A' || el.tagName ===
-                    'BUTTON' || el.closest('a') || el.closest('button') || el.closest('.nav__logo') || el.closest(
-                        '.lang-switch') || el.closest('.folder-header') || el.closest('.folder-preview') || el.closest(
-                        '.contact-link') || el.closest('.contact-info') || el.closest('.hero__scroll-indicator') || el
-                    .closest('.comments-toggle'); if (shouldInvert) { cursor.classList.add('custom-cursor--inverted');
-                    cursor.classList.add('custom-cursor--hover'); } else { cursor.classList.remove(
-                    'custom-cursor--inverted');
-                    cursor.classList.remove('custom-cursor--hover'); } });
-            document.addEventListener('mouseleave', () => { cursor.style.opacity = '0';
+                    cursorVisible = true;
+                }
+                requestCursorUpdate();
+                const el = e.target;
+                const shouldInvert = el.tagName === 'A' || el.tagName === 'BUTTON' || el.closest('a') || el.closest(
+                    'button') || el.closest('.nav__logo') || el.closest('.lang-switch') || el.closest(
+                    '.portfolio-card') || el.closest('.contact-link') || el.closest('.contact-info') || el.closest(
+                    '.hero__scroll-indicator') || el.closest('.comments-toggle');
+                if (shouldInvert) {
+                    cursor.classList.add('custom-cursor--inverted');
+                    cursor.classList.add('custom-cursor--hover');
+                } else {
+                    cursor.classList.remove('custom-cursor--inverted');
+                    cursor.classList.remove('custom-cursor--hover');
+                }
+            });
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
                 cursorVisible = false;
-                cursor.classList.remove('custom-cursor--inverted', 'custom-cursor--hover'); });
-            document.addEventListener('mouseenter', () => { cursor.style.opacity = '1';
-                cursorVisible = true; });
+                cursor.classList.remove('custom-cursor--inverted', 'custom-cursor--hover');
+            });
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorVisible = true;
+            });
 
             const loadingScreen = document.getElementById('loadingScreen');
             let loadingHidden = false;
 
-            function hideLoadingScreen() { if (loadingHidden) return;
+            function hideLoadingScreen() {
+                if (loadingHidden) return;
                 loadingHidden = true;
                 loadingScreen.classList.add('loading-screen--fade-out');
-                loadingScreen.addEventListener('transitionend', function handler() { loadingScreen.classList.add(
-                        'loading-screen--hidden');
-                    loadingScreen.removeEventListener('transitionend', handler); }); }
+                loadingScreen.addEventListener('transitionend', function handler() {
+                    loadingScreen.classList.add('loading-screen--hidden');
+                    loadingScreen.removeEventListener('transitionend', handler);
+                });
+            }
             const minLoadTime = 2000,
                 startTime = Date.now();
-            window.addEventListener('load', () => { const elapsed = Date.now() - startTime,
+            window.addEventListener('load', () => {
+                const elapsed = Date.now() - startTime,
                     remaining = Math.max(0, minLoadTime - elapsed);
-                setTimeout(hideLoadingScreen, remaining); });
+                setTimeout(hideLoadingScreen, remaining);
+            });
             setTimeout(() => { if (!loadingHidden) hideLoadingScreen(); }, 3500);
 
             const nav = document.getElementById('nav'),
@@ -1328,67 +1295,128 @@
                 revealElements = document.querySelectorAll('.reveal-on-scroll');
             let currentLang = 'zh';
             const translationCache = new Map();
-            allTranslatable.forEach(el => { translationCache.set(el, { zh: el.getAttribute('data-zh'), en: el.getAttribute(
-                        'data-en') }); });
+            allTranslatable.forEach(el => {
+                translationCache.set(el, { zh: el.getAttribute('data-zh'), en: el.getAttribute('data-en') });
+            });
 
-            function switchLanguage(lang) { if (currentLang === lang) return;
+            function switchLanguage(lang) {
+                if (currentLang === lang) return;
                 currentLang = lang;
-                langOptions.forEach(opt => { const isActive = opt.getAttribute('data-lang') === lang;
+                langOptions.forEach(opt => {
+                    const isActive = opt.getAttribute('data-lang') === lang;
                     opt.classList.toggle('lang-option--active', isActive);
-                    opt.setAttribute('aria-pressed', isActive); });
-                allTranslatable.forEach(el => { const cached = translationCache.get(el); if (cached && cached[lang]) { el
-                        .innerHTML = cached[lang]; } });
+                    opt.setAttribute('aria-pressed', isActive);
+                });
+                allTranslatable.forEach(el => {
+                    const cached = translationCache.get(el);
+                    if (cached && cached[lang]) { el.innerHTML = cached[lang]; }
+                });
                 document.title = lang === 'zh' ? 'yrenk — 艺术家 / 设计师' : 'yrenk — Artist / Designer';
                 document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } })); }
-            langOptions.forEach(option => { option.addEventListener('click', () => { switchLanguage(option.getAttribute(
-                    'data-lang')); }); });
-            langSwitch.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault();
-                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh'); } });
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+            }
+            langOptions.forEach(option => {
+                option.addEventListener('click', () => { switchLanguage(option.getAttribute('data-lang')); });
+            });
+            langSwitch.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh');
+                }
+            });
             let scrollTicking = false;
 
-            function updateNavScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 30);
-                scrollTicking = false; }
+            function updateNavScroll() {
+                nav.classList.toggle('nav--scrolled', window.scrollY > 30);
+                scrollTicking = false;
+            }
             const revealedSet = new Set();
 
-            function checkRevealElements() { const triggerPoint = window.innerHeight * 0.84;
-                revealElements.forEach(el => { if (el.getBoundingClientRect().top < triggerPoint && !revealedSet.has(el)) {
+            function checkRevealElements() {
+                const triggerPoint = window.innerHeight * 0.84;
+                revealElements.forEach(el => {
+                    if (el.getBoundingClientRect().top < triggerPoint && !revealedSet.has(el)) {
                         revealedSet.add(el);
-                        el.classList.add('reveal-on-scroll--visible'); } }); }
-            window.addEventListener('scroll', () => { if (!scrollTicking) { requestAnimationFrame(() => { updateNavScroll
-                        ();
+                        el.classList.add('reveal-on-scroll--visible');
+                    }
+                });
+            }
+            window.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    requestAnimationFrame(() => { updateNavScroll();
                         checkRevealElements(); });
-                    scrollTicking = true; } }, { passive: true });
+                    scrollTicking = true;
+                }
+            }, { passive: true });
             setTimeout(checkRevealElements, 450);
 
-            // 文件夹切换
-            function toggleFolder(header) {
-                const item = header.closest('.folder-item');
-                item.classList.toggle('folder-item--open');
-            }
-            window.toggleFolder = toggleFolder;
+            // 画廊系统
+            const galleryOverlay = document.getElementById('galleryOverlay');
+            const galleryImagesContainer = document.getElementById('galleryImages');
 
+            function openGallery(card) {
+                const imagesStr = card.getAttribute('data-images');
+                const images = imagesStr.split(',').map(s => s.trim());
+                let html = '';
+                images.forEach(src => {
+                    html += `
+                        <div class="gallery-image-wrap">
+                            <img src="${src}" alt="" loading="lazy">
+                        </div>`;
+                });
+                galleryImagesContainer.innerHTML = html;
+                galleryOverlay.classList.add('gallery-overlay--visible');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeGallery() {
+                galleryOverlay.classList.remove('gallery-overlay--visible');
+                document.body.style.overflow = '';
+            }
+            window.openGallery = openGallery;
+            window.closeGallery = closeGallery;
+
+            // ESC 关闭
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && galleryOverlay.classList.contains('gallery-overlay--visible')) {
+                    closeGallery();
+                }
+            });
+
+            // 鼠标跟随光斑
             let mx = 0,
                 my = 0,
                 tmx = 0,
                 tmy = 0,
                 mt = false;
-            document.addEventListener('mousemove', (e) => { tmx = e.clientX;
-                tmy = e.clientY; if (!mt) { requestAnimationFrame(() => { mx += (tmx - mx) * 0.06;
-                        my += (tmy - my) * 0.06; const cx = window.innerWidth / 2,
+            document.addEventListener('mousemove', (e) => {
+                tmx = e.clientX;
+                tmy = e.clientY;
+                if (!mt) {
+                    requestAnimationFrame(() => {
+                        mx += (tmx - mx) * 0.06;
+                        my += (tmy - my) * 0.06;
+                        const cx = window.innerWidth / 2,
                             cy = window.innerHeight / 2,
                             ox = (mx - cx) / cx,
-                            oy = (my - cy) / cy; const orbs = document.querySelectorAll('.bg-orb'); if (
-                            orbs[0]) orbs[0].style.transform = `translate(${ox*14}px, ${oy*14}px)`; if (orbs[
-                                1]) orbs[1].style.transform = `translate(${-ox*18}px, ${-oy*18}px)`; if (orbs[
-                                2]) orbs[2].style.transform = `translate(${ox*9}px, ${-oy*11}px)`; if (orbs[3])
-                            orbs[3].style.transform = `translate(${-ox*16}px, ${oy*9}px)`;
-                        mt = false; });
-                    mt = true; } }, { passive: true });
+                            oy = (my - cy) / cy;
+                        const orbs = document.querySelectorAll('.bg-orb');
+                        if (orbs[0]) orbs[0].style.transform = `translate(${ox*14}px, ${oy*14}px)`;
+                        if (orbs[1]) orbs[1].style.transform = `translate(${-ox*18}px, ${-oy*18}px)`;
+                        if (orbs[2]) orbs[2].style.transform = `translate(${ox*9}px, ${-oy*11}px)`;
+                        if (orbs[3]) orbs[3].style.transform = `translate(${-ox*16}px, ${oy*9}px)`;
+                        mt = false;
+                    });
+                    mt = true;
+                }
+            }, { passive: true });
 
-            document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'l') { e
-                    .preventDefault();
-                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh'); } });
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+                    e.preventDefault();
+                    switchLanguage(currentLang === 'zh' ? 'en' : 'zh');
+                }
+            });
 
             const commentsToggle = document.getElementById('commentsToggle');
             const commentsCollapseWrapper = document.getElementById('commentsCollapseWrapper');
@@ -1397,31 +1425,46 @@
             let totalComments = 0;
 
             function updateCommentsUI() {
-                if (isCommentsExpanded) { commentsToggle.classList.add('comments-toggle--expanded');
+                if (isCommentsExpanded) {
+                    commentsToggle.classList.add('comments-toggle--expanded');
                     commentsCollapseWrapper.classList.remove('comments-collapse-wrapper--collapsed');
                     commentsToggle.querySelector('.comments-toggle__label').textContent = currentLang === 'zh' ?
-                        '收起讨论' : 'Collapse'; } else { commentsToggle.classList.remove('comments-toggle--expanded');
+                        '收起讨论' : 'Collapse';
+                } else {
+                    commentsToggle.classList.remove('comments-toggle--expanded');
                     commentsCollapseWrapper.classList.add('comments-collapse-wrapper--collapsed');
                     commentsToggle.querySelector('.comments-toggle__label').textContent = currentLang === 'zh' ?
-                        '展开讨论' : 'Discussion'; }
-                if (totalComments > 0) { commentsCount.textContent = totalComments;
-                    commentsCount.classList.add('comments-toggle__count--visible'); } else { commentsCount.classList
-                        .remove('comments-toggle__count--visible'); }
+                        '展开讨论' : 'Discussion';
+                }
+                if (totalComments > 0) {
+                    commentsCount.textContent = totalComments;
+                    commentsCount.classList.add('comments-toggle__count--visible');
+                } else {
+                    commentsCount.classList.remove('comments-toggle__count--visible');
+                }
             }
-            commentsToggle.addEventListener('click', () => { isCommentsExpanded = !isCommentsExpanded;
-                updateCommentsUI(); });
+            commentsToggle.addEventListener('click', () => {
+                isCommentsExpanded = !isCommentsExpanded;
+                updateCommentsUI();
+            });
             window.addEventListener('message', (event) => {
-                if (event.origin === 'https://giscus.app' && event.data && event.data.giscus) { const d = event.data
-                        .giscus; if (d.discussion && typeof d.discussion.totalCommentCount === 'number') {
+                if (event.origin === 'https://giscus.app' && event.data && event.data.giscus) {
+                    const d = event.data.giscus;
+                    if (d.discussion && typeof d.discussion.totalCommentCount === 'number') {
                         totalComments = d.discussion.totalCommentCount + (d.discussion.totalReplyCount || 0);
-                        updateCommentsUI(); } }
+                        updateCommentsUI();
+                    }
+                }
             });
             updateCommentsUI();
-            window.addEventListener('languageChanged', () => { commentsToggle.querySelector(
-                    '.comments-toggle__label').textContent = isCommentsExpanded ? (currentLang === 'zh' ? '收起讨论' :
-                    'Collapse') : (currentLang === 'zh' ? '展开讨论' : 'Discussion'); });
+            window.addEventListener('languageChanged', () => {
+                commentsToggle.querySelector('.comments-toggle__label').textContent = isCommentsExpanded ? (
+                    currentLang === 'zh' ? '收起讨论' : 'Collapse') : (currentLang === 'zh' ? '展开讨论' :
+                    'Discussion');
+            });
 
-            console.log('%c yrenk %c personal site ', 'font-size:1.5em;font-weight:700;color:#F4EAC5;letter-spacing:0.06em;',
+            console.log('%c yrenk %c personal site ',
+                'font-size:1.5em;font-weight:700;color:#F4EAC5;letter-spacing:0.06em;',
                 'font-size:0.9em;color:#F4EAC5;');
             checkRevealElements();
             window.switchLanguage = switchLanguage;
