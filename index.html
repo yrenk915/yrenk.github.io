@@ -56,19 +56,11 @@
         }
 
         .custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent-pale);
-            pointer-events: none;
-            z-index: 99999;
+            position: fixed; top: 0; left: 0; width: 10px; height: 10px; border-radius: 50%;
+            background: var(--accent-pale); pointer-events: none; z-index: 99999;
             transform: translate(-50%, -50%);
             transition: width 0.28s var(--transition-smooth), height 0.28s var(--transition-smooth), background 0.32s var(--transition-smooth), box-shadow 0.32s var(--transition-smooth);
-            box-shadow: 0 0 0 0 rgba(164, 226, 198, 0);
-            will-change: transform, left, top;
+            box-shadow: 0 0 0 0 rgba(164, 226, 198, 0); will-change: transform, left, top;
         }
         .custom-cursor--inverted { background: var(--primary-mid-dark); box-shadow: 0 0 20px 3px rgba(1, 38, 150, 0.5); }
         .custom-cursor--hover { width: 22px; height: 22px; box-shadow: 0 0 24px 6px rgba(164, 226, 198, 0.55); }
@@ -122,93 +114,43 @@
 
         .main-container { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 48px; }
 
-        /* 导航栏 - 60% 透明度 + 10px 磨砂 */
+        /* 导航栏 - 60%透明度 + 10px磨砂 */
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             padding: 18px 48px; display: flex; align-items: center; justify-content: space-between;
             background: rgba(0, 18, 70, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(164, 226, 198, 0.08);
             transition: all 0.45s var(--transition-smooth);
         }
         .nav--scrolled {
-            background: rgba(0, 8, 36, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom-color: rgba(164, 226, 198, 0.2);
-            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.45);
-            padding: 14px 48px;
+            background: rgba(0, 8, 36, 0.75); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-bottom-color: rgba(164, 226, 198, 0.2); box-shadow: 0 2px 40px rgba(0, 0, 0, 0.45); padding: 14px 48px;
         }
-        .nav__logo {
-            font-size: 1.3rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-all);
-            text-decoration: none; transition: all 0.3s var(--transition-smooth); position: relative; white-space: nowrap;
-        }
-        .nav__logo::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px;
-            background: var(--text-all); transition: width 0.4s var(--transition-smooth); border-radius: 1px;
-        }
+        .nav__logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-all); text-decoration: none; transition: all 0.3s var(--transition-smooth); position: relative; white-space: nowrap; }
+        .nav__logo::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--text-all); transition: width 0.4s var(--transition-smooth); border-radius: 1px; }
         .nav__logo:hover::after { width: 100%; }
         .nav__links { display: flex; align-items: center; gap: 32px; list-style: none; flex-wrap: wrap; justify-content: flex-end; }
-        .nav__link {
-            text-decoration: none; color: var(--text-all); font-size: 0.88rem; font-weight: 400;
-            letter-spacing: 0.05em; transition: all 0.3s var(--transition-smooth); position: relative;
-            padding: 5px 0; cursor: pointer; background: none; border: none; font-family: inherit; white-space: nowrap;
-        }
-        .nav__link::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
-            background: var(--text-all); transition: width 0.4s var(--transition-smooth); border-radius: 1px;
-        }
+        .nav__link { text-decoration: none; color: var(--text-all); font-size: 0.88rem; font-weight: 400; letter-spacing: 0.05em; transition: all 0.3s var(--transition-smooth); position: relative; padding: 5px 0; cursor: pointer; background: none; border: none; font-family: inherit; white-space: nowrap; }
+        .nav__link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--text-all); transition: width 0.4s var(--transition-smooth); border-radius: 1px; }
         .nav__link:hover { font-weight: 600; }
         .nav__link:hover::after { width: 100%; }
-        .lang-switch {
-            display: flex; align-items: center; gap: 3px; background: rgba(1, 38, 150, 0.22);
-            border: 1px solid rgba(164, 226, 198, 0.16); border-radius: 24px; padding: 3px;
-            transition: all 0.3s var(--transition-smooth); cursor: pointer; white-space: nowrap;
-        }
+        .lang-switch { display: flex; align-items: center; gap: 3px; background: rgba(1, 38, 150, 0.22); border: 1px solid rgba(164, 226, 198, 0.16); border-radius: 24px; padding: 3px; transition: all 0.3s var(--transition-smooth); cursor: pointer; white-space: nowrap; }
         .lang-switch:hover { background: rgba(1, 38, 150, 0.4); border-color: rgba(164, 226, 198, 0.4); }
-        .lang-option {
-            padding: 6px 15px; border-radius: 20px; font-size: 0.78rem; letter-spacing: 0.05em;
-            transition: all 0.3s var(--transition-smooth); cursor: pointer; border: none;
-            background: transparent; color: var(--text-all); font-family: inherit; font-weight: 400;
-        }
-        .lang-option--active {
-            background: var(--accent-pale); color: var(--primary-mid-dark); font-weight: 700;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-        }
+        .lang-option { padding: 6px 15px; border-radius: 20px; font-size: 0.78rem; letter-spacing: 0.05em; transition: all 0.3s var(--transition-smooth); cursor: pointer; border: none; background: transparent; color: var(--text-all); font-family: inherit; font-weight: 400; }
+        .lang-option--active { background: var(--accent-pale); color: var(--primary-mid-dark); font-weight: 700; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25); }
 
         /* Hero */
-        .hero {
-            min-height: 100vh; display: flex; align-items: center; padding: 100px 0 90px;
-            position: relative; overflow: hidden;
-        }
-        .hero__inner {
-            display: flex; align-items: center; gap: 64px; width: 100%;
-            animation: heroReveal 1.8s var(--transition-smooth) both;
-        }
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 0 90px; position: relative; overflow: hidden; }
+        .hero__inner { display: flex; align-items: center; gap: 64px; width: 100%; animation: heroReveal 1.8s var(--transition-smooth) both; }
         @keyframes heroReveal { 0% { filter: blur(16px); transform: translateY(28px); } 100% { filter: blur(0); transform: translateY(0); } }
         .hero__logo-wrap { flex-shrink: 0; position: relative; }
-        .hero__logo-img {
-            width: clamp(100px, 15vw, 170px); height: auto; display: block;
-            filter: drop-shadow(0 0 50px rgba(164, 226, 198, 0.12)); transition: filter 0.6s ease;
-        }
-        .hero__divider {
-            width: 1px; height: clamp(80px, 14vh, 130px);
-            background: linear-gradient(to bottom, transparent 0%, rgba(244, 234, 197, 0.15) 15%, rgba(244, 234, 197, 0.35) 50%, rgba(244, 234, 197, 0.15) 85%, transparent 100%);
-            flex-shrink: 0; border-radius: 1px;
-        }
+        .hero__logo-img { width: clamp(100px, 15vw, 170px); height: auto; display: block; filter: drop-shadow(0 0 50px rgba(164, 226, 198, 0.12)); transition: filter 0.6s ease; }
+        .hero__divider { width: 1px; height: clamp(80px, 14vh, 130px); background: linear-gradient(to bottom, transparent 0%, rgba(244, 234, 197, 0.15) 15%, rgba(244, 234, 197, 0.35) 50%, rgba(244, 234, 197, 0.15) 85%, transparent 100%); flex-shrink: 0; border-radius: 1px; }
         .hero__text { display: flex; flex-direction: column; gap: 6px; }
-        .hero__line {
-            font-size: clamp(1.25rem, 2.6vw, 1.65rem); font-weight: 300; letter-spacing: 0.07em;
-            color: var(--text-all); line-height: 1.75; max-width: 520px;
-        }
+        .hero__line { font-size: clamp(1.25rem, 2.6vw, 1.65rem); font-weight: 300; letter-spacing: 0.07em; color: var(--text-all); line-height: 1.75; max-width: 520px; }
         .hero__line--bold { font-weight: 500; letter-spacing: 0.08em; }
-        .hero__scroll-indicator {
-            position: absolute; bottom: 40px; left: 0; display: flex; align-items: center; gap: 14px;
-            cursor: pointer; background: none; border: none; color: var(--text-all); font-family: inherit;
-            font-size: 0.7rem; letter-spacing: 0.12em; font-weight: 400; transition: all 0.4s var(--transition-smooth);
-            animation: indicatorReveal 1.2s 1s var(--transition-smooth) both;
-        }
+        .hero__scroll-indicator { position: absolute; bottom: 40px; left: 0; display: flex; align-items: center; gap: 14px; cursor: pointer; background: none; border: none; color: var(--text-all); font-family: inherit; font-size: 0.7rem; letter-spacing: 0.12em; font-weight: 400; transition: all 0.4s var(--transition-smooth); animation: indicatorReveal 1.2s 1s var(--transition-smooth) both; }
         @keyframes indicatorReveal { 0% { filter: blur(10px); transform: translateY(16px); } 100% { filter: blur(0); transform: translateY(0); } }
         .hero__scroll-indicator:hover { gap: 20px; font-weight: 600; }
         .scroll-line { width: 36px; height: 1px; background: var(--text-all); transition: width 0.4s var(--transition-smooth); }
@@ -217,37 +159,80 @@
         .section { padding: 90px 0; position: relative; }
         .section__label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-all); margin-bottom: 28px; font-weight: 500; }
 
+        /* 通用卡片 */
         .glass-card {
             background: rgba(1, 27, 110, 0.35); border: 1px solid rgba(164, 226, 198, 0.08);
             border-radius: var(--card-radius); padding: var(--card-padding); transition: all 0.5s var(--transition-smooth); position: relative;
         }
         .glass-card:hover { background: rgba(1, 33, 130, 0.5); border-color: rgba(164, 226, 198, 0.25); box-shadow: 0 8px 48px rgba(0, 0, 0, 0.4); transform: translateY(-2px); }
-        .glass-card__text { font-size: 1.05rem; line-height: 2; color: var(--text-all); letter-spacing: 0.025em; font-weight: 400; }
-        .glass-card__text p { margin-bottom: 18px; }
-        .glass-card__text p:last-child { margin-bottom: 0; }
 
-        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-        .portfolio-item {
-            background: rgba(1, 27, 110, 0.3); border: 1px solid rgba(164, 226, 198, 0.06);
-            border-radius: 16px; overflow: hidden; transition: all 0.5s var(--transition-smooth); cursor: pointer; position: relative;
+        /* ============ 文件夹系统 ============ */
+        .folder-list {
+            display: flex; flex-direction: column; gap: 12px;
         }
-        .portfolio-item:hover { background: rgba(1, 33, 130, 0.48); border-color: rgba(164, 226, 198, 0.28); box-shadow: 0 10px 44px rgba(0, 0, 0, 0.4); transform: translateY(-3px); }
-        .portfolio-item__image {
-            width: 100%; aspect-ratio: 4 / 3;
+        .folder-item {
+            background: rgba(1, 27, 110, 0.35); border: 1px solid rgba(164, 226, 198, 0.08);
+            border-radius: 18px; overflow: hidden; transition: all 0.4s var(--transition-smooth);
+        }
+        .folder-item:hover {
+            background: rgba(1, 33, 130, 0.5); border-color: rgba(164, 226, 198, 0.25);
+            box-shadow: 0 6px 32px rgba(0, 0, 0, 0.35);
+        }
+        .folder-header {
+            display: flex; align-items: center; justify-content: space-between; padding: 24px 32px;
+            cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+            transition: background 0.3s var(--transition-smooth);
+        }
+        .folder-header:hover {
+            background: rgba(164, 226, 198, 0.04);
+        }
+        .folder-title {
+            font-size: 1rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-all);
+        }
+        .folder-arrow {
+            width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.45s var(--transition-smooth);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .folder-arrow svg {
+            width: 100%; height: 100%; stroke: var(--text-all); fill: none;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .folder-item--open .folder-arrow {
+            transform: rotate(180deg);
+        }
+        .folder-body {
+            display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.55s var(--transition-smooth);
+        }
+        .folder-item--open .folder-body {
+            grid-template-rows: 1fr;
+        }
+        .folder-content {
+            overflow: hidden;
+        }
+        .folder-content-inner {
+            padding: 0 32px 28px 32px;
+        }
+        .folder-image-wrap {
+            width: 100%; border-radius: 12px; overflow: hidden;
             background: linear-gradient(160deg, rgba(1, 28, 95, 0.85) 0%, rgba(1, 36, 125, 0.5) 100%);
-            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
             mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
         }
-        .portfolio-item__img {
-            width: 100%; height: 100%; object-fit: contain; display: block;
+        .folder-image {
+            width: 100%; height: auto; max-height: 60vh; object-fit: contain; display: block;
             animation: imageSlowDrift 28s ease-in-out infinite both;
         }
-        @keyframes imageSlowDrift { 0%,100% { transform: scale(1) translateY(0); } 25% { transform: scale(1.03) translateY(-2px); } 50% { transform: scale(1.01) translateY(1px); } 75% { transform: scale(1.04) translateY(-1px); } }
-        .portfolio-item:hover .portfolio-item__img { animation-duration: 14s; }
-        .portfolio-item__info { padding: 24px 26px; position: relative; z-index: 1; background: rgba(1, 27, 110, 0.25); }
-        .portfolio-item__title { font-size: 0.92rem; font-weight: 700; color: var(--text-all); letter-spacing: 0.04em; }
+        @keyframes imageSlowDrift {
+            0%,100% { transform: scale(1) translateY(0); }
+            25% { transform: scale(1.02) translateY(-2px); }
+            50% { transform: scale(1.005) translateY(1px); }
+            75% { transform: scale(1.03) translateY(-1px); }
+        }
+        .folder-item:hover .folder-image {
+            animation-duration: 14s;
+        }
 
+        /* 评论区折叠系统 */
         .comments-section { margin-top: 8px; }
         .comments-toggle {
             display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
@@ -288,24 +273,27 @@
         @keyframes revealBlurSlide { 0% { filter: blur(18px); transform: translateY(42px); } 100% { filter: blur(0); transform: translateY(0); } }
         .reveal-on-scroll { animation: none; }
         .reveal-on-scroll--visible { animation: revealBlurSlide 1.2s var(--transition-smooth) both; }
-        .portfolio-grid.reveal-on-scroll--visible .portfolio-item:nth-child(1) { animation: revealBlurSlide 0.9s 0s var(--transition-smooth) both; }
-        .portfolio-grid.reveal-on-scroll--visible .portfolio-item:nth-child(2) { animation: revealBlurSlide 0.9s 0.14s var(--transition-smooth) both; }
-        .portfolio-grid.reveal-on-scroll--visible .portfolio-item:nth-child(3) { animation: revealBlurSlide 0.9s 0.28s var(--transition-smooth) both; }
+        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(1) { animation: revealBlurSlide 0.8s 0s var(--transition-smooth) both; }
+        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(2) { animation: revealBlurSlide 0.8s 0.1s var(--transition-smooth) both; }
+        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(3) { animation: revealBlurSlide 0.8s 0.2s var(--transition-smooth) both; }
+        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(4) { animation: revealBlurSlide 0.8s 0.3s var(--transition-smooth) both; }
+        .folder-list.reveal-on-scroll--visible .folder-item:nth-child(5) { animation: revealBlurSlide 0.8s 0.4s var(--transition-smooth) both; }
 
-        @media (max-width: 1000px) { .hero__inner { gap: 40px; } .portfolio-grid { gap: 24px; } }
+        /* 响应式 */
         @media (max-width: 860px) {
             .main-container { padding: 0 32px; }
             .nav { padding: 14px 32px; }
             .nav--scrolled { padding: 12px 32px; }
             .nav__links { gap: 18px; }
-            .hero { min-height: 100vh; padding: 100px 0 85px; }
+            .hero { padding: 100px 0 85px; }
             .hero__inner { flex-direction: column; align-items: flex-start; gap: 32px; text-align: left; }
             .hero__logo-img { width: clamp(70px, 20vw, 110px); }
             .hero__divider { width: 56px; height: 1px; background: linear-gradient(to right, transparent, rgba(244, 234, 197, 0.3), rgba(244, 234, 197, 0.3), transparent); }
             .hero__line { font-size: 1.1rem; max-width: 100%; }
-            .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .glass-card { padding: 36px 28px; }
             .section { padding: 60px 0; }
+            .folder-header { padding: 20px 24px; }
+            .folder-content-inner { padding: 0 24px 24px 24px; }
         }
         @media (max-width: 600px) {
             .main-container { padding: 0 20px; }
@@ -314,30 +302,29 @@
             .nav__links { gap: 10px; justify-content: flex-start; width: 100%; order: 3; }
             .nav__link { font-size: 0.76rem; }
             .nav__logo { font-size: 1.1rem; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 18px; }
-            .glass-card { padding: 28px 20px; border-radius: 16px; }
-            .section { padding: 45px 0; }
-            .hero { min-height: 100vh; padding: 90px 0 80px; }
+            .hero { padding: 90px 0 80px; }
             .hero__inner { gap: 24px; }
             .hero__logo-img { width: clamp(56px, 18vw, 80px); }
-            .hero__line { font-size: 0.95rem; letter-spacing: 0.05em; line-height: 1.7; }
+            .hero__line { font-size: 0.95rem; }
             .hero__scroll-indicator { bottom: 32px; font-size: 0.66rem; }
-            .portfolio-item__info { padding: 18px 20px; }
-            .portfolio-item__title { font-size: 0.84rem; }
+            .glass-card { padding: 28px 20px; }
+            .section { padding: 45px 0; }
+            .folder-header { padding: 16px 18px; }
+            .folder-content-inner { padding: 0 18px 20px 18px; }
+            .folder-title { font-size: 0.9rem; }
             .contact-row { flex-direction: column; align-items: stretch; gap: 12px; }
-            .contact-link, .contact-info { text-align: center; justify-content: center; font-size: 0.84rem; padding: 10px 20px; }
+            .contact-link, .contact-info { font-size: 0.84rem; padding: 10px 20px; text-align: center; justify-content: center; }
             .loading-logo { top: 24px; left: 20px; font-size: 1.1rem; }
             .loading-indicator { width: 150px; }
             .lang-option { padding: 4px 10px; font-size: 0.7rem; }
-            .comments-toggle { font-size: 0.8rem; padding: 10px 18px; gap: 8px; }
-            .comments-content { padding: 4px; }
+            .comments-toggle { font-size: 0.8rem; padding: 10px 18px; }
         }
         @media (max-width: 400px) {
             .nav { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 14px; }
             .nav--scrolled { padding: 8px 14px; }
-            .nav__links { gap: 6px; flex-wrap: wrap; justify-content: flex-start; }
+            .nav__links { gap: 6px; }
             .nav__link { font-size: 0.7rem; }
-            .hero { min-height: 100vh; padding: 80px 0 75px; }
+            .hero { padding: 80px 0 75px; }
             .hero__logo-img { width: 50px; }
             .hero__line { font-size: 0.88rem; }
             .comments-toggle { width: 100%; justify-content: center; }
@@ -395,29 +382,99 @@
             </button>
         </section>
 
+        <!-- 作品集 - 文件夹交互 -->
         <section class="section" id="portfolio">
             <p class="section__label reveal-on-scroll" data-zh="作品集" data-en="Portfolio">作品集</p>
-            <div class="portfolio-grid reveal-on-scroll">
-                <div class="portfolio-item">
-                    <div class="portfolio-item__image"><img src="images/a.webp" alt="书房" class="portfolio-item__img" loading="lazy"></div>
-                    <div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="书房" data-en="Study">书房</div></div>
+            <div class="folder-list reveal-on-scroll">
+                <!-- 书房 -->
+                <div class="folder-item">
+                    <div class="folder-header" onclick="toggleFolder(this)">
+                        <span class="folder-title" data-zh="书房" data-en="Study">书房</span>
+                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    </div>
+                    <div class="folder-body">
+                        <div class="folder-content">
+                            <div class="folder-content-inner">
+                                <div class="folder-image-wrap">
+                                    <img src="images/a.webp" alt="书房" class="folder-image" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item__image"><img src="images/b.webp" alt="过道" class="portfolio-item__img" loading="lazy"></div>
-                    <div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="过道" data-en="Corridor">过道</div></div>
+                <!-- 过道 -->
+                <div class="folder-item">
+                    <div class="folder-header" onclick="toggleFolder(this)">
+                        <span class="folder-title" data-zh="过道" data-en="Corridor">过道</span>
+                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    </div>
+                    <div class="folder-body">
+                        <div class="folder-content">
+                            <div class="folder-content-inner">
+                                <div class="folder-image-wrap">
+                                    <img src="images/b.webp" alt="过道" class="folder-image" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-item__image"><img src="images/c.webp" alt="角落" class="portfolio-item__img" loading="lazy"></div>
-                    <div class="portfolio-item__info"><div class="portfolio-item__title" data-zh="角落" data-en="Corner">角落</div></div>
+                <!-- 角落 -->
+                <div class="folder-item">
+                    <div class="folder-header" onclick="toggleFolder(this)">
+                        <span class="folder-title" data-zh="角落" data-en="Corner">角落</span>
+                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    </div>
+                    <div class="folder-body">
+                        <div class="folder-content">
+                            <div class="folder-content-inner">
+                                <div class="folder-image-wrap">
+                                    <img src="images/c.webp" alt="角落" class="folder-image" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- 小角落 - 文件夹交互，塞入d.webp和e.webp -->
         <section class="section" id="corner">
             <p class="section__label reveal-on-scroll" data-zh="小角落" data-en="Corner">小角落</p>
-            <div class="glass-card reveal-on-scroll"><div class="glass-card__text"><p data-zh="" data-en=""></p></div></div>
+            <div class="folder-list reveal-on-scroll">
+                <div class="folder-item">
+                    <div class="folder-header" onclick="toggleFolder(this)">
+                        <span class="folder-title" data-zh="角落·壹" data-en="Corner I">角落·壹</span>
+                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    </div>
+                    <div class="folder-body">
+                        <div class="folder-content">
+                            <div class="folder-content-inner">
+                                <div class="folder-image-wrap">
+                                    <img src="images/d.webp" alt="角落·壹" class="folder-image" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="folder-item">
+                    <div class="folder-header" onclick="toggleFolder(this)">
+                        <span class="folder-title" data-zh="角落·贰" data-en="Corner II">角落·贰</span>
+                        <span class="folder-arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+                    </div>
+                    <div class="folder-body">
+                        <div class="folder-content">
+                            <div class="folder-content-inner">
+                                <div class="folder-image-wrap">
+                                    <img src="images/e.webp" alt="角落·贰" class="folder-image" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <!-- 灵感讨论 -->
         <section class="section" id="inspiration">
             <p class="section__label reveal-on-scroll" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</p>
             <div class="glass-card reveal-on-scroll" style="padding: 40px 44px;">
@@ -454,6 +511,7 @@
             </div>
         </section>
 
+        <!-- 联系 -->
         <section class="section" id="contact">
             <p class="section__label reveal-on-scroll" data-zh="联系" data-en="Contact">联系</p>
             <div class="glass-card reveal-on-scroll" style="text-align:center;">
@@ -480,7 +538,7 @@
 
             function updateCursorPosition() { const dx = targetX - cursorX, dy = targetY - cursorY; cursorX += dx * 0.2; cursorY += dy * 0.2; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursorTicking = false; }
             function requestCursorUpdate() { if (!cursorTicking) { requestAnimationFrame(() => { updateCursorPosition(); }); cursorTicking = true; } }
-            document.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; if (!cursorVisible) { cursorX = targetX; cursorY = targetY; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursor.style.opacity = '1'; cursorVisible = true; } requestCursorUpdate(); const el = e.target; const shouldInvert = el.tagName === 'A' || el.tagName === 'BUTTON' || el.closest('a') || el.closest('button') || el.closest('.nav__logo') || el.closest('.lang-switch') || el.closest('.portfolio-item') || el.closest('.contact-link') || el.closest('.contact-info') || el.closest('.hero__scroll-indicator') || el.closest('.comments-toggle'); if (shouldInvert) { cursor.classList.add('custom-cursor--inverted'); cursor.classList.add('custom-cursor--hover'); } else { cursor.classList.remove('custom-cursor--inverted'); cursor.classList.remove('custom-cursor--hover'); } });
+            document.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; if (!cursorVisible) { cursorX = targetX; cursorY = targetY; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursor.style.opacity = '1'; cursorVisible = true; } requestCursorUpdate(); const el = e.target; const shouldInvert = el.tagName === 'A' || el.tagName === 'BUTTON' || el.closest('a') || el.closest('button') || el.closest('.nav__logo') || el.closest('.lang-switch') || el.closest('.folder-header') || el.closest('.contact-link') || el.closest('.contact-info') || el.closest('.hero__scroll-indicator') || el.closest('.comments-toggle'); if (shouldInvert) { cursor.classList.add('custom-cursor--inverted'); cursor.classList.add('custom-cursor--hover'); } else { cursor.classList.remove('custom-cursor--inverted'); cursor.classList.remove('custom-cursor--hover'); } });
             document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorVisible = false; cursor.classList.remove('custom-cursor--inverted', 'custom-cursor--hover'); });
             document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; cursorVisible = true; });
 
@@ -505,6 +563,13 @@
             function checkRevealElements() { const triggerPoint = window.innerHeight * 0.84; revealElements.forEach(el => { if (el.getBoundingClientRect().top < triggerPoint && !revealedSet.has(el)) { revealedSet.add(el); el.classList.add('reveal-on-scroll--visible'); } }); }
             window.addEventListener('scroll', () => { if (!scrollTicking) { requestAnimationFrame(() => { updateNavScroll(); checkRevealElements(); }); scrollTicking = true; } }, { passive: true });
             setTimeout(checkRevealElements, 450);
+
+            // 文件夹交互
+            function toggleFolder(header) {
+                const item = header.closest('.folder-item');
+                item.classList.toggle('folder-item--open');
+            }
+            window.toggleFolder = toggleFolder;
 
             let mx = 0, my = 0, tmx = 0, tmy = 0, mt = false;
             document.addEventListener('mousemove', (e) => { tmx = e.clientX; tmy = e.clientY; if (!mt) { requestAnimationFrame(() => { mx += (tmx - mx) * 0.06; my += (tmy - my) * 0.06; const cx = window.innerWidth / 2, cy = window.innerHeight / 2, ox = (mx - cx) / cx, oy = (my - cy) / cy; const orbs = document.querySelectorAll('.bg-orb'); if (orbs[0]) orbs[0].style.transform = `translate(${ox*14}px, ${oy*14}px)`; if (orbs[1]) orbs[1].style.transform = `translate(${-ox*18}px, ${-oy*18}px)`; if (orbs[2]) orbs[2].style.transform = `translate(${ox*9}px, ${-oy*11}px)`; if (orbs[3]) orbs[3].style.transform = `translate(${-ox*16}px, ${oy*9}px)`; mt = false; }); mt = true; } }, { passive: true });
