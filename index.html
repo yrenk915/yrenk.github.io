@@ -1276,20 +1276,21 @@
             window.addEventListener('scroll', () => { if (!scrollTicking) { requestAnimationFrame(() => { updateNavScroll(); checkRevealElements(); }); scrollTicking = true; } }, { passive: true });
             setTimeout(checkRevealElements, 450);
 
-            // ====== 修复后的画廊逻辑 ======
+            // ====== 画廊逻辑（已修复） ======
             const galleryOverlay = document.getElementById('galleryOverlay');
             const galleryImagesContainer = document.getElementById('galleryImages');
 
             function openGallery(card) {
                 const imagesStr = card.getAttribute('data-images');
-                // 兼容逗号后有无空格的情况
+                // 使用逗号分割并清理空白，同时加上版本参数防止缓存
                 const images = imagesStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
-                console.log('画廊打开，图片列表：', images); // 调试用，可删除
+                console.log('🖼️ 画廊打开，图片列表：', images);
                 let html = '';
                 images.forEach((src, index) => {
+                    const versionedSrc = src + '?v=20250609'; // 版本参数
                     html += `
                     <div class="gallery-image-wrap">
-                        <img src="${src}" alt="作品 ${index + 1}" loading="lazy"
+                        <img src="${versionedSrc}" alt="作品 ${index + 1}" loading="lazy"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                              onload="this.style.display='block'; if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
                         <div class="gallery-image-error" style="display:none;">图片加载失败</div>
@@ -1298,7 +1299,7 @@
                 galleryImagesContainer.innerHTML = html;
                 galleryOverlay.classList.add('gallery-overlay--visible');
                 document.body.style.overflow = 'hidden';
-                // 滚动到顶部
+                // 滚动弹窗到顶部
                 const container = document.getElementById('galleryContainer');
                 if (container) container.scrollTop = 0;
             }
