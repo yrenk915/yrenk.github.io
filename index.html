@@ -6,15 +6,11 @@
     <title>yrenk — artist / designer</title>
     <style>
         :root {
-            --primary-deepest: #000a1f;
             --primary-deeper: #00145c;
             --primary-mid-dark: #012696;
-            --primary-mid: #012eb0;
             --accent-pale: #A4E2C6;
             --text-all: #F4EAC5;
             --blur-strong: 56px;
-            --card-radius: 20px;
-            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
             --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --spring-soft: cubic-bezier(0.25, 1.2, 0.5, 1);
         }
@@ -22,7 +18,7 @@
         html { scroll-behavior:smooth; scrollbar-width:thin; scrollbar-color:var(--primary-lighter) transparent; cursor:none; }
         ::-webkit-scrollbar { width:4px; }
         ::-webkit-scrollbar-track { background:transparent; }
-        ::-webkit-scrollbar-thumb { background:var(--primary-lighter); border-radius:2px; }
+        ::-webkit-scrollbar-thumb { background:var(--primary-mid-dark); border-radius:2px; }
         body {
             font-family: 'Inter', 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui, sans-serif;
             background-color: var(--primary-deeper);
@@ -34,23 +30,19 @@
             min-height: 100vh;
             position: relative;
             cursor: none;
-            font-weight: 400;
+            font-weight: 300;
         }
 
-        /* 自定义光标 */
         .custom-cursor {
             position:fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
             background:var(--accent-pale); pointer-events:none; z-index:99999;
             transform: translate(-50%, -50%);
             transition: width 0.28s, height 0.28s, background 0.32s;
-            box-shadow: 0 0 0 0 rgba(164,226,198,0);
         }
         .custom-cursor--inverted { background:var(--primary-mid-dark); box-shadow:0 0 20px 3px rgba(1,38,150,0.5); }
         .custom-cursor--hover { width:22px; height:22px; box-shadow:0 0 24px 6px rgba(164,226,198,0.55); }
-        .custom-cursor--hover.custom-cursor--inverted { box-shadow:0 0 24px 6px rgba(1,38,150,0.55); }
         @media (hover:none) and (pointer:coarse) { .custom-cursor { display:none; } html,body { cursor:auto; } }
 
-        /* 加载画面 */
         .loading-screen {
             position:fixed; inset:0; z-index:9998; background:var(--primary-deeper);
             display:flex; align-items:flex-start; justify-content:center;
@@ -63,187 +55,133 @@
         .loading-bar { height:100%; width:0%; background:var(--accent-pale); border-radius:1px; box-shadow:0 0 12px rgba(164,226,198,0.45); animation:loadingProgress 2s both; }
         @keyframes loadingProgress { 0% { width:0%; } 100% { width:100%; } }
 
-        /* 背景光斑 */
         .bg-orbs { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
-        .bg-orb { position:absolute; border-radius:50%; filter:blur(var(--blur-strong)); opacity:0.32; will-change:transform; animation-timing-function:cubic-bezier(0.45,0.05,0.55,0.95); animation-iteration-count:infinite; }
-        .bg-orb--1 { width:58vmax; height:58vmax; background:radial-gradient(circle,rgba(1,38,150,0.45) 0%,rgba(0,20,80,0.18) 50%,transparent 70%); top:-22%; left:-16%; animation-name:orbFloat1; animation-duration:20s; }
-        .bg-orb--2 { width:50vmax; height:50vmax; background:radial-gradient(circle,rgba(1,38,150,0.4) 0%,rgba(0,15,60,0.14) 50%,transparent 70%); bottom:-28%; right:-14%; animation-name:orbFloat2; animation-duration:24s; animation-delay:-6s; }
-        .bg-orb--3 { width:40vmax; height:40vmax; background:radial-gradient(circle,rgba(244,234,197,0.14) 0%,rgba(200,180,140,0.06) 50%,transparent 70%); top:48%; left:38%; animation-name:orbFloat3; animation-duration:22s; animation-delay:-12s; }
-        .bg-orb--4 { width:32vmax; height:32vmax; background:radial-gradient(circle,rgba(1,38,150,0.3) 0%,rgba(0,18,70,0.08) 50%,transparent 70%); top:8%; right:18%; animation-name:orbFloat4; animation-duration:18s; animation-delay:-4s; }
+        .bg-orb { position:absolute; border-radius:50%; filter:blur(var(--blur-strong)); opacity:0.2; will-change:transform; animation-iteration-count:infinite; }
+        .bg-orb--1 { width:58vmax; height:58vmax; background:radial-gradient(circle,rgba(1,38,150,0.45) 0%,rgba(0,20,80,0.18) 50%,transparent 70%); top:-22%; left:-16%; animation:orbFloat1 20s ease-in-out infinite; }
+        .bg-orb--2 { width:50vmax; height:50vmax; background:radial-gradient(circle,rgba(1,38,150,0.4) 0%,rgba(0,15,60,0.14) 50%,transparent 70%); bottom:-28%; right:-14%; animation:orbFloat2 24s ease-in-out infinite; animation-delay:-6s; }
+        .bg-orb--3 { width:40vmax; height:40vmax; background:radial-gradient(circle,rgba(244,234,197,0.14) 0%,rgba(200,180,140,0.06) 50%,transparent 70%); top:48%; left:38%; animation:orbFloat3 22s ease-in-out infinite; animation-delay:-12s; }
         @keyframes orbFloat1 { 0%,100% { transform:translate(0,0) scale(1); } 20% { transform:translate(9vw,6vh) scale(1.14); } 40% { transform:translate(4vw,13vh) scale(0.89); } 60% { transform:translate(-6vw,8vh) scale(1.07); } 80% { transform:translate(3vw,-4vh) scale(0.94); } }
         @keyframes orbFloat2 { 0%,100% { transform:translate(0,0) scale(1); } 25% { transform:translate(-7vw,-9vh) scale(1.12); } 50% { transform:translate(-3vw,-4vh) scale(0.87); } 75% { transform:translate(6vw,-7vh) scale(1.05); } }
         @keyframes orbFloat3 { 0%,100% { transform:translate(0,0) scale(1); } 30% { transform:translate(6vw,-5vh) scale(1.1); } 60% { transform:translate(-4vw,7vh) scale(0.91); } 85% { transform:translate(2vw,-3vh) scale(1.04); } }
-        @keyframes orbFloat4 { 0%,100% { transform:translate(0,0) scale(1); } 35% { transform:translate(-5vw,8vh) scale(1.17); } 65% { transform:translate(7vw,3vh) scale(0.86); } 90% { transform:translate(-2vw,-6vh) scale(1.06); } }
-        .bg-texture { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.02; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-size:180px 180px; }
-
-        .main-container { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 48px; }
+        .bg-texture { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.015; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-size:180px 180px; }
 
         /* 导航 */
         .nav {
-            position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px;
+            position:fixed; top:0; left:0; right:0; z-index:100; padding:16px 48px;
             display:flex; align-items:center; justify-content:space-between;
-            background:rgba(0,18,70,0.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-            border-bottom:1px solid rgba(164,226,198,0.08); transition:all 0.45s var(--spring-soft);
+            background:rgba(0,18,70,0.5); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid rgba(164,226,198,0.06); transition:all 0.45s var(--spring-soft);
         }
-        .nav--scrolled {
-            background:rgba(0,8,36,0.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-            border-bottom-color:rgba(164,226,198,0.2); box-shadow:0 2px 40px rgba(0,0,0,0.45); padding:14px 48px;
-        }
-        .nav__logo { font-size:1.3rem; font-weight:700; letter-spacing:0.06em; color:var(--text-all); text-decoration:none; transition:transform 0.3s var(--spring); position:relative; white-space:nowrap; }
+        .nav--scrolled { background:rgba(0,8,36,0.7); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom-color:rgba(164,226,198,0.2); padding:12px 48px; }
+        .nav__logo { font-size:1.2rem; font-weight:700; letter-spacing:0.06em; color:var(--text-all); text-decoration:none; transition:transform 0.3s var(--spring); }
         .nav__logo:active { transform:scale(0.95); }
-        .nav__logo::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:var(--text-all); transition:width 0.4s var(--spring-soft); border-radius:1px; }
-        .nav__logo:hover::after { width:100%; }
-        .nav__links { display:flex; align-items:center; gap:32px; list-style:none; flex-wrap:wrap; justify-content:flex-end; }
-        .nav__link { text-decoration:none; color:var(--text-all); font-size:0.88rem; font-weight:400; letter-spacing:0.05em; transition:all 0.3s var(--spring-soft); position:relative; padding:5px 0; cursor:pointer; background:none; border:none; font-family:inherit; white-space:nowrap; display:inline-block; }
-        .nav__link:active { transform:scale(0.94); }
-        .nav__link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px; background:var(--text-all); transition:width 0.4s var(--spring-soft); border-radius:1px; }
+        .nav__links { display:flex; align-items:center; gap:28px; list-style:none; }
+        .nav__link { text-decoration:none; color:var(--text-all); font-size:0.85rem; font-weight:400; letter-spacing:0.05em; transition:all 0.3s var(--spring-soft); padding:5px 0; background:none; border:none; font-family:inherit; cursor:pointer; }
         .nav__link:hover { font-weight:600; }
-        .nav__link:hover::after { width:100%; }
-        .lang-switch { display:flex; align-items:center; gap:3px; background:rgba(1,38,150,0.22); border:1px solid rgba(164,226,198,0.16); border-radius:24px; padding:3px; transition:all 0.3s var(--spring-soft); cursor:pointer; white-space:nowrap; }
+        .lang-switch { display:flex; align-items:center; gap:3px; background:rgba(1,38,150,0.22); border:1px solid rgba(164,226,198,0.16); border-radius:8px; padding:3px; cursor:pointer; }
         .lang-switch:active { transform:scale(0.96); }
-        .lang-switch:hover { background:rgba(1,38,150,0.4); border-color:rgba(164,226,198,0.4); }
-        .lang-option { padding:6px 15px; border-radius:20px; font-size:0.78rem; letter-spacing:0.05em; transition:all 0.3s var(--spring-soft); cursor:pointer; border:none; background:transparent; color:var(--text-all); font-family:inherit; font-weight:400; }
-        .lang-option--active { background:var(--accent-pale); color:var(--primary-mid-dark); font-weight:700; box-shadow:0 2px 12px rgba(0,0,0,0.25); }
+        .lang-option { padding:5px 14px; border-radius:6px; font-size:0.76rem; letter-spacing:0.05em; cursor:pointer; border:none; background:transparent; color:var(--text-all); font-family:inherit; font-weight:400; }
+        .lang-option--active { background:var(--accent-pale); color:var(--primary-mid-dark); font-weight:700; }
 
-        /* Hero */
-        .hero { min-height:100vh; display:flex; align-items:center; padding:100px 0 90px; position:relative; overflow:hidden; }
-        .hero__inner { display:flex; align-items:center; gap:64px; width:100%; animation:heroReveal 1.8s var(--spring-soft) both; }
-        @keyframes heroReveal { 0% { filter:blur(16px); transform:translateY(28px); } 100% { filter:blur(0); transform:translateY(0); } }
-        .hero__logo-wrap { flex-shrink:0; position:relative; }
-        .hero__logo-img { width:clamp(100px,15vw,170px); height:auto; display:block; filter:drop-shadow(0 0 50px rgba(164,226,198,0.12)); transition:transform 0.4s var(--spring); }
-        .hero__logo-img:active { transform:scale(0.96); }
-        .hero__divider { width:1px; height:clamp(80px,14vh,130px); background:linear-gradient(to bottom,transparent 0%,rgba(244,234,197,0.15) 15%,rgba(244,234,197,0.35) 50%,rgba(244,234,197,0.15) 85%,transparent 100%); flex-shrink:0; border-radius:1px; }
-        .hero__text { display:flex; flex-direction:column; gap:6px; }
-        .hero__line { font-size:clamp(1.25rem,2.6vw,1.65rem); font-weight:300; letter-spacing:0.07em; color:var(--text-all); line-height:1.75; max-width:520px; }
-        .hero__line--bold { font-weight:500; letter-spacing:0.08em; }
-        .hero__scroll-indicator { position:absolute; bottom:40px; left:0; display:flex; align-items:center; gap:14px; cursor:pointer; background:none; border:none; color:var(--text-all); font-family:inherit; font-size:0.7rem; letter-spacing:0.12em; font-weight:400; transition:all 0.4s var(--spring-soft); animation:indicatorReveal 1.2s 1s var(--spring-soft) both; }
-        @keyframes indicatorReveal { 0% { filter:blur(10px); transform:translateY(16px); } 100% { filter:blur(0); transform:translateY(0); } }
-        .hero__scroll-indicator:active { transform:scale(0.95); }
-        .hero__scroll-indicator:hover { gap:20px; font-weight:600; }
-        .scroll-line { width:36px; height:1px; background:var(--text-all); transition:width 0.4s var(--spring-soft); }
-        .hero__scroll-indicator:hover .scroll-line { width:54px; }
+        /* Hero = 全屏球体 */
+        .hero {
+            width:100%; height:100vh; position:relative; overflow:hidden;
+            display:flex; align-items:center; justify-content:center;
+        }
+        .hero-sphere {
+            width:100%; height:100%; position:absolute; top:0; left:0;
+            perspective:1200px; overflow:visible;
+        }
+        .hero-sphere-canvas {
+            position:absolute; top:50%; left:50%; width:0; height:0;
+            transform-style:preserve-3d; pointer-events:none;
+        }
+        .hero-sphere-img {
+            position:absolute; width:180px; height:auto; border-radius:10px;
+            box-shadow:0 20px 60px rgba(0,0,0,0.5); transform-origin:center center;
+            transition:filter 0.3s; will-change:transform,z-index; pointer-events:auto; cursor:pointer;
+        }
+        .hero-sphere-img:hover { filter:brightness(1.2); }
+        /* 叠加文字 */
+        .hero-overlay {
+            position:absolute; bottom:60px; left:60px; z-index:10; pointer-events:none;
+            animation:fadeInUp 1.5s 0.5s var(--spring-soft) both;
+        }
+        @keyframes fadeInUp { 0% { filter:blur(10px); transform:translateY(20px); } 100% { filter:blur(0); transform:translateY(0); } }
+        .hero-overlay p { font-size:clamp(1rem,2vw,1.3rem); font-weight:300; letter-spacing:0.06em; color:var(--text-all); line-height:1.6; }
+        .hero-overlay p strong { font-weight:500; }
+        .hero-scroll {
+            position:absolute; bottom:36px; left:60px; z-index:10;
+            display:flex; align-items:center; gap:12px; cursor:pointer;
+            background:none; border:none; color:var(--text-all); font-family:inherit;
+            font-size:0.68rem; letter-spacing:0.12em; font-weight:400;
+            animation:fadeInUp 1.5s 0.8s var(--spring-soft) both;
+        }
+        .hero-scroll:hover { gap:18px; }
+        .hero-scroll-line { width:28px; height:1px; background:var(--text-all); transition:width 0.4s; }
+        .hero-scroll:hover .hero-scroll-line { width:44px; }
 
-        .section { padding:90px 0; position:relative; }
-        .section__label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--text-all); margin-bottom:28px; font-weight:500; }
+        .section { padding:100px 0; position:relative; }
+        .section__label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.18em; color:var(--text-all); margin-bottom:36px; font-weight:500; }
+        .section-divider { width:100%; height:1px; background:rgba(244,234,197,0.08); margin:40px 0; }
+        .text-block { max-width:800px; margin:0 auto; }
+        .text-block p { font-size:1.08rem; line-height:2; color:var(--text-all); font-weight:300; letter-spacing:0.025em; margin-bottom:24px; }
+        .main-container { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 48px; }
 
-        /* 3D球体容器 */
-        .sphere-container {
-            width: 100%;
-            height: 600px;
-            margin: 0 auto;
-            position: relative;
-            perspective: 1200px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .comments-toggle {
+            display:inline-flex; align-items:center; gap:10px; cursor:pointer;
+            background:rgba(1,38,150,0.18); border:1px solid rgba(164,226,198,0.12);
+            border-radius:8px; padding:12px 24px; color:var(--text-all); font-family:inherit;
+            font-size:0.9rem; font-weight:500; letter-spacing:0.05em; transition:all 0.4s var(--spring);
         }
-        .sphere-canvas {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            pointer-events: none;
-        }
-        .sphere-img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 160px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-            transform-origin: center center;
-            transition: filter 0.3s;
-            will-change: transform, z-index;
-            pointer-events: auto;
-            cursor: pointer;
-        }
-        .sphere-img:hover {
-            filter: brightness(1.2);
-        }
-
-        /* 评论区等 */
-        .glass-card { background:rgba(1,27,110,0.35); border:1px solid rgba(164,226,198,0.08); border-radius:var(--card-radius); padding:46px 48px; transition:all 0.5s var(--spring-soft); position:relative; }
-        .comments-toggle { display:inline-flex; align-items:center; gap:10px; cursor:pointer; background:rgba(1,38,150,0.28); border:1px solid rgba(164,226,198,0.15); border-radius:28px; padding:11px 22px; color:var(--text-all); font-family:inherit; font-size:0.88rem; font-weight:500; letter-spacing:0.05em; transition:all 0.4s var(--spring); user-select:none; -webkit-tap-highlight-color:transparent; outline:none; }
         .comments-toggle:active { transform:scale(0.94); }
-        .comments-toggle:hover { background:rgba(1,46,176,0.48); border-color:rgba(164,226,198,0.4); box-shadow:0 4px 24px rgba(0,0,0,0.35); gap:14px; }
-        .comments-toggle__icon { width:18px; height:18px; flex-shrink:0; transition:transform 0.45s var(--spring); display:flex; align-items:center; justify-content:center; }
+        .comments-toggle:hover { background:rgba(1,46,176,0.3); border-color:rgba(164,226,198,0.3); gap:14px; }
+        .comments-toggle__icon { width:18px; height:18px; transition:transform 0.45s var(--spring); display:flex; align-items:center; justify-content:center; }
         .comments-toggle__icon svg { width:100%; height:100%; stroke:var(--text-all); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
         .comments-toggle--expanded .comments-toggle__icon { transform:rotate(180deg); }
         .comments-toggle__label { white-space:nowrap; }
-        .comments-toggle__count { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; border-radius:11px; background:var(--accent-pale); color:var(--primary-mid-dark); font-size:0.72rem; font-weight:700; padding:0 7px; transition:all 0.35s var(--spring); opacity:0; transform:scale(0.8); }
+        .comments-toggle__count { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; border-radius:6px; background:var(--accent-pale); color:var(--primary-mid-dark); font-size:0.72rem; font-weight:700; padding:0 7px; transition:all 0.35s var(--spring); opacity:0; transform:scale(0.8); }
         .comments-toggle__count--visible { opacity:1; transform:scale(1); }
-        .comments-collapse-wrapper { display:grid; grid-template-rows:1fr; transition:grid-template-rows 0.55s var(--spring-soft); margin-top:20px; }
+        .comments-collapse-wrapper { display:grid; grid-template-rows:1fr; transition:grid-template-rows 0.55s var(--spring-soft); margin-top:24px; }
         .comments-collapse-wrapper--collapsed { grid-template-rows:0fr; }
         .comments-collapse-inner { overflow:hidden; }
-        .comments-content { border-radius:16px; background:rgba(1,27,110,0.22); border:1px solid rgba(164,226,198,0.06); padding:8px; min-height:60px; }
+        .comments-content { border-radius:8px; background:rgba(1,27,110,0.15); border:1px solid rgba(164,226,198,0.04); padding:8px; min-height:60px; }
 
         .contact-row { display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:center; }
-        .contact-link,.contact-info { display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--text-all); font-size:0.92rem; font-weight:500; letter-spacing:0.05em; transition:all 0.35s var(--spring); padding:12px 24px; border-radius:28px; background:rgba(1,38,150,0.2); border:1px solid rgba(164,226,198,0.1); }
+        .contact-link,.contact-info { display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--text-all); font-size:0.92rem; font-weight:500; letter-spacing:0.05em; transition:all 0.35s var(--spring); padding:12px 24px; border-radius:6px; background:rgba(1,38,150,0.15); border:1px solid rgba(164,226,198,0.08); }
         .contact-link:active,.contact-info:active { transform:scale(0.94); }
-        .contact-link:hover,.contact-info:hover { background:rgba(1,38,150,0.38); border-color:rgba(164,226,198,0.4); font-weight:700; transform:translateY(-3px) scale(1.02); box-shadow:0 8px 28px rgba(0,0,0,0.45); }
-        .contact-link__dot,.contact-info__dot { width:6px; height:6px; border-radius:50%; background:var(--accent-pale); flex-shrink:0; transition:all 0.35s var(--spring); }
-        .contact-link:hover .contact-link__dot,.contact-info:hover .contact-info__dot { box-shadow:0 0 16px rgba(164,226,198,0.65); transform:scale(1.3); }
-
-        .footer { text-align:center; padding:48px 0; color:var(--text-all); font-size:0.78rem; font-weight:400; letter-spacing:0.08em; border-top:1px solid rgba(164,226,198,0.05); margin-top:56px; }
+        .contact-link:hover,.contact-info:hover { background:rgba(1,38,150,0.3); border-color:rgba(164,226,198,0.3); font-weight:700; transform:translateY(-2px); }
+        .contact-link__dot,.contact-info__dot { width:6px; height:6px; border-radius:50%; background:var(--accent-pale); }
+        .footer { text-align:center; padding:60px 0; color:var(--text-all); font-size:0.78rem; font-weight:300; letter-spacing:0.08em; border-top:1px solid rgba(164,226,198,0.06); }
 
         @keyframes revealBlurSlide { 0% { filter:blur(18px); transform:translateY(42px); } 100% { filter:blur(0); transform:translateY(0); } }
         .reveal-on-scroll { animation:none; }
         .reveal-on-scroll--visible { animation:revealBlurSlide 1.2s var(--spring-soft) both; }
 
-        /* 响应式 */
-        @media (max-width:900px) { :root { --blur-strong:30px; } }
         @media (max-width:860px) {
             .main-container { padding:0 32px; }
             .nav { padding:14px 32px; }
-            .nav--scrolled { padding:12px 32px; }
-            .nav__links { gap:18px; }
-            .hero { padding:100px 0 85px; }
-            .hero__inner { flex-direction:column; align-items:flex-start; gap:32px; text-align:left; }
-            .hero__logo-img { width:clamp(70px,20vw,110px); }
-            .hero__divider { width:56px; height:1px; background:linear-gradient(to right,transparent,rgba(244,234,197,0.3),rgba(244,234,197,0.3),transparent); }
-            .hero__line { font-size:1.1rem; max-width:100%; }
-            .section { padding:60px 0; }
-            .glass-card { padding:32px 24px; }
-            .sphere-container { height:500px; }
-            .sphere-img { width:130px; }
+            .nav__links { gap:16px; }
+            .hero-overlay { bottom:40px; left:32px; }
+            .hero-scroll { bottom:24px; left:32px; }
+            .hero-sphere-img { width:140px; }
+            .section { padding:70px 0; }
         }
         @media (max-width:600px) {
             .main-container { padding:0 20px; }
-            .nav { padding:12px 20px; flex-wrap:wrap; gap:10px; }
-            .nav--scrolled { padding:10px 20px; }
-            .nav__links { gap:10px; justify-content:flex-start; width:100%; order:3; }
-            .nav__link { font-size:0.76rem; }
-            .nav__logo { font-size:1.1rem; }
-            .hero { padding:90px 0 80px; }
-            .hero__inner { gap:24px; }
-            .hero__logo-img { width:clamp(56px,18vw,80px); }
-            .hero__line { font-size:0.95rem; }
-            .hero__scroll-indicator { bottom:32px; font-size:0.66rem; }
-            .section { padding:45px 0; }
-            .glass-card { padding:24px 18px; }
-            .sphere-container { height:400px; }
-            .sphere-img { width:100px; }
-            .contact-row { flex-direction:column; align-items:stretch; gap:12px; }
+            .nav { padding:12px 20px; }
+            .nav__links { gap:8px; }
+            .nav__link { font-size:0.72rem; }
+            .hero-overlay { bottom:32px; left:20px; }
+            .hero-overlay p { font-size:0.9rem; }
+            .hero-scroll { bottom:16px; left:20px; }
+            .hero-sphere-img { width:100px; }
+            .section { padding:50px 0; }
+            .text-block p { font-size:0.95rem; }
+            .contact-row { flex-direction:column; gap:12px; }
             .contact-link,.contact-info { font-size:0.84rem; padding:10px 20px; text-align:center; justify-content:center; }
             .loading-logo { top:24px; left:20px; font-size:1.1rem; }
-            .loading-indicator { width:150px; }
             .lang-option { padding:4px 10px; font-size:0.7rem; }
-            .comments-toggle { font-size:0.8rem; padding:10px 18px; }
-            :root { --blur-strong:20px; }
-            .bg-orb--1,.bg-orb--2 { opacity:0.2; }
-            .bg-orb--3,.bg-orb--4 { opacity:0.1; }
-        }
-        @media (max-width:400px) {
-            .nav { flex-direction:column; align-items:stretch; gap:8px; padding:10px 14px; }
-            .nav--scrolled { padding:8px 14px; }
-            .nav__links { gap:6px; }
-            .nav__link { font-size:0.7rem; }
-            .hero { padding:80px 0 75px; }
-            .hero__logo-img { width:50px; }
-            .hero__line { font-size:0.88rem; }
-            .comments-toggle { width:100%; justify-content:center; }
         }
     </style>
 </head>
@@ -254,64 +192,58 @@
         <div class="loading-indicator"><div class="loading-bar"></div></div>
     </div>
     <div class="bg-orbs" aria-hidden="true">
-        <div class="bg-orb bg-orb--1"></div><div class="bg-orb bg-orb--2"></div>
-        <div class="bg-orb bg-orb--3"></div><div class="bg-orb bg-orb--4"></div>
+        <div class="bg-orb bg-orb--1"></div><div class="bg-orb bg-orb--2"></div><div class="bg-orb bg-orb--3"></div>
     </div>
     <div class="bg-texture" aria-hidden="true"></div>
 
     <nav class="nav" id="nav">
-        <a href="#hero" class="nav__logo">yrenk</a>
-        <div style="display:flex;align-items:center;gap:20px;">
+        <a href="#" class="nav__logo">yrenk</a>
+        <div style="display:flex;align-items:center;gap:16px;">
             <ul class="nav__links">
-                <li><a href="#portfolio" class="nav__link" data-zh="作品集" data-en="Portfolio">作品集</a></li>
                 <li><a href="#corner" class="nav__link" data-zh="小角落" data-en="Corner">小角落</a></li>
                 <li><a href="#inspiration" class="nav__link" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</a></li>
                 <li><a href="#contact" class="nav__link" data-zh="联系" data-en="Contact">联系</a></li>
             </ul>
-            <div class="lang-switch" id="langSwitch" title="切换语言 / Switch Language" role="button" tabindex="0" aria-label="切换语言">
-                <button class="lang-option lang-option--active" data-lang="zh" aria-pressed="true">中</button>
-                <button class="lang-option" data-lang="en" aria-pressed="false">EN</button>
+            <div class="lang-switch" id="langSwitch" title="切换语言" role="button" tabindex="0">
+                <button class="lang-option lang-option--active" data-lang="zh">中</button>
+                <button class="lang-option" data-lang="en">EN</button>
             </div>
         </div>
     </nav>
 
-    <div class="main-container">
-        <section class="hero" id="hero">
-            <div class="hero__inner">
-                <div class="hero__logo-wrap"><img src="images/logo.webp" alt="yrenk" class="hero__logo-img" loading="eager"></div>
-                <div class="hero__divider"></div>
-                <div class="hero__text">
-                    <p class="hero__line hero__line--bold">偏爱角落，也雕琢光影。</p>
-                    <p class="hero__line">用安静的空间，收纳被遗忘的旧梦与新的相逢。</p>
-                </div>
-            </div>
-            <button class="hero__scroll-indicator" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})" aria-label="向下滚动">
-                <span class="scroll-line"></span>
-                <span data-zh="向下探索" data-en="Scroll">向下探索</span>
-            </button>
-        </section>
+    <!-- 首页 = 全屏3D球体 -->
+    <section class="hero" id="hero">
+        <div class="hero-sphere" id="heroSphere">
+            <div class="hero-sphere-canvas" id="heroSphereCanvas"></div>
+        </div>
+        <div class="hero-overlay">
+            <p><strong>偏爱角落，也雕琢光影。</strong></p>
+            <p>用安静的空间，收纳被遗忘的旧梦与新的相逢。</p>
+        </div>
+        <button class="hero-scroll" onclick="document.getElementById('corner').scrollIntoView({behavior:'smooth'})">
+            <span class="hero-scroll-line"></span>
+            <span data-zh="向下探索" data-en="Scroll">向下探索</span>
+        </button>
+    </section>
 
-        <!-- 作品集 - 3D球体 -->
-        <section class="section" id="portfolio">
-            <p class="section__label reveal-on-scroll" data-zh="作品集" data-en="Portfolio">作品集</p>
-            <div class="sphere-container" id="sphereContainer">
-                <div class="sphere-canvas" id="sphereCanvas"></div>
-            </div>
-        </section>
+    <div class="main-container">
+        <div class="section-divider"></div>
 
         <section class="section" id="corner">
             <p class="section__label reveal-on-scroll" data-zh="小角落" data-en="Corner">小角落</p>
-            <div class="glass-card reveal-on-scroll" style="text-align:center;">
-                <p style="font-size:1.05rem;line-height:2;color:var(--text-all);letter-spacing:0.025em;opacity:0.7;" data-zh="更多作品即将呈现" data-en="More works coming soon">更多作品即将呈现</p>
+            <div class="text-block reveal-on-scroll">
+                <p data-zh="更多作品即将呈现" data-en="More works coming soon">更多作品即将呈现</p>
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <section class="section" id="inspiration">
             <p class="section__label reveal-on-scroll" data-zh="灵感讨论" data-en="Inspiration">灵感讨论</p>
-            <div class="glass-card reveal-on-scroll">
-                <p style="font-size:1.05rem;line-height:2;color:var(--text-all);letter-spacing:0.025em;margin-bottom:24px;font-weight:400;" data-zh="欢迎留下你的想法、灵感或讨论。用 GitHub 账号登录即可留言。" data-en="Share your thoughts, inspiration, or discussion. Sign in with GitHub to comment.">欢迎留下你的想法、灵感或讨论。用 GitHub 账号登录即可留言。</p>
-                <div class="comments-section">
-                    <button class="comments-toggle comments-toggle--expanded" id="commentsToggle" aria-label="展开/收起评论区">
+            <div class="text-block reveal-on-scroll">
+                <p data-zh="欢迎留下你的想法、灵感或讨论。用 GitHub 账号登录即可留言。" data-en="Share your thoughts, inspiration, or discussion. Sign in with GitHub to comment.">欢迎留下你的想法、灵感或讨论。用 GitHub 账号登录即可留言。</p>
+                <div style="margin-top:28px;">
+                    <button class="comments-toggle comments-toggle--expanded" id="commentsToggle">
                         <span class="comments-toggle__icon"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
                         <span class="comments-toggle__label" data-zh="展开讨论" data-en="Discussion">展开讨论</span>
                         <span class="comments-toggle__count" id="commentsCount">0</span>
@@ -327,11 +259,13 @@
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <section class="section" id="contact">
             <p class="section__label reveal-on-scroll" data-zh="联系" data-en="Contact">联系</p>
-            <div class="glass-card reveal-on-scroll" style="text-align:center;">
-                <p style="font-size:1.05rem;line-height:2;color:var(--text-all);letter-spacing:0.025em;margin-bottom:32px;font-weight:400;" data-zh="欢迎合作与交流，随时通过以下方式联系。" data-en="Open to collaboration and conversation. Reach out anytime.">欢迎合作与交流，随时通过以下方式联系。</p>
-                <div class="contact-row">
+            <div class="text-block reveal-on-scroll">
+                <p data-zh="欢迎合作与交流，随时通过以下方式联系。" data-en="Open to collaboration and conversation. Reach out anytime.">欢迎合作与交流，随时通过以下方式联系。</p>
+                <div class="contact-row" style="margin-top:28px;">
                     <a href="mailto:xwkyrenk@163.com" class="contact-link"><span class="contact-link__dot"></span> xwkyrenk@163.com</a>
                     <a href="weixin://dl/chat?kkkk091515" class="contact-link"><span class="contact-link__dot"></span> WeChat</a>
                     <a href="YOUR_WECHAT_OFFICIAL_ACCOUNT_LINK" class="contact-info" target="_blank"><span class="contact-info__dot"></span> 公众号：yrenk</a>
@@ -346,200 +280,98 @@
 
     <script>
         (function() {
-            // 自定义光标
             const cursor = document.getElementById('customCursor');
-            let cursorX = window.innerWidth/2, cursorY = window.innerHeight/2, targetX = cursorX, targetY = cursorY, cursorVisible = false, cursorTicking = false;
-            const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-            if (isTouchDevice) { cursor.style.display = 'none'; document.documentElement.style.cursor = 'auto'; document.body.style.cursor = 'auto'; }
-
-            function updateCursorPosition() { const dx = targetX - cursorX, dy = targetY - cursorY; cursorX += dx * 0.2; cursorY += dy * 0.2; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursorTicking = false; }
-            function requestCursorUpdate() { if (!cursorTicking) { requestAnimationFrame(() => { updateCursorPosition(); }); cursorTicking = true; } }
-            document.addEventListener('mousemove', (e) => {
-                targetX = e.clientX; targetY = e.clientY;
-                if (!cursorVisible) { cursorX = targetX; cursorY = targetY; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursor.style.opacity = '1'; cursorVisible = true; }
-                requestCursorUpdate();
-                const el = e.target; const shouldInvert = el.tagName === 'A' || el.tagName === 'BUTTON' || el.closest('a') || el.closest('button') || el.closest('.nav__logo') || el.closest('.lang-switch') || el.closest('.contact-link') || el.closest('.contact-info') || el.closest('.hero__scroll-indicator') || el.closest('.comments-toggle') || el.closest('.sphere-img');
-                if (shouldInvert) { cursor.classList.add('custom-cursor--inverted'); cursor.classList.add('custom-cursor--hover'); } else { cursor.classList.remove('custom-cursor--inverted'); cursor.classList.remove('custom-cursor--hover'); }
+            let cx=window.innerWidth/2,cy=window.innerHeight/2,tx=cx,ty=cy,cv=false,ct=false;
+            const td=window.matchMedia('(hover:none) and (pointer:coarse)').matches;
+            if(td){cursor.style.display='none';document.documentElement.style.cursor='auto';document.body.style.cursor='auto';}
+            function uc(){const dx=tx-cx,dy=ty-cy;cx+=dx*0.2;cy+=dy*0.2;cursor.style.left=cx+'px';cursor.style.top=cy+'px';ct=false;}
+            function rc(){if(!ct){requestAnimationFrame(uc);ct=true;}}
+            document.addEventListener('mousemove',e=>{
+                tx=e.clientX;ty=e.clientY;if(!cv){cx=tx;cy=ty;cursor.style.left=cx+'px';cursor.style.top=cy+'px';cursor.style.opacity='1';cv=true;}rc();
+                const el=e.target,inv=el.closest('a')||el.closest('button')||el.closest('.hero-sphere-img')||el.closest('.nav__link');
+                if(inv){cursor.classList.add('custom-cursor--inverted','custom-cursor--hover');}else{cursor.classList.remove('custom-cursor--inverted','custom-cursor--hover');}
             });
-            document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorVisible = false; cursor.classList.remove('custom-cursor--inverted', 'custom-cursor--hover'); });
-            document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; cursorVisible = true; });
+            document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';cv=false;cursor.classList.remove('custom-cursor--inverted','custom-cursor--hover');});
+            document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';cv=true;});
 
-            // 加载画面
-            const loadingScreen = document.getElementById('loadingScreen');
-            let loadingHidden = false;
-            function hideLoadingScreen() { if (loadingHidden) return; loadingHidden = true; loadingScreen.classList.add('loading-screen--fade-out'); loadingScreen.addEventListener('transitionend', function handler() { loadingScreen.classList.add('loading-screen--hidden'); loadingScreen.removeEventListener('transitionend', handler); }); }
-            setTimeout(() => { if (!loadingHidden) hideLoadingScreen(); }, 2200);
-            window.addEventListener('load', () => { setTimeout(() => { if (!loadingHidden) hideLoadingScreen(); }, 200); });
+            const ls=document.getElementById('loadingScreen');let lh=false;
+            function hl(){if(lh)return;lh=true;ls.classList.add('loading-screen--fade-out');ls.addEventListener('transitionend',function h(){ls.classList.add('loading-screen--hidden');ls.removeEventListener('transitionend',h);});}
+            setTimeout(()=>{if(!lh)hl();},2200);
+            window.addEventListener('load',()=>{setTimeout(()=>{if(!lh)hl();},200);});
 
-            // 导航滚动
-            const nav = document.getElementById('nav');
-            let scrollTicking = false;
-            function updateNavScroll() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); scrollTicking = false; }
-            window.addEventListener('scroll', () => { if (!scrollTicking) { requestAnimationFrame(() => { updateNavScroll(); checkRevealElements(); }); scrollTicking = true; } }, { passive: true });
+            const nav=document.getElementById('nav');let st=false;
+            function un(){nav.classList.toggle('nav--scrolled',window.scrollY>30);st=false;}
+            window.addEventListener('scroll',()=>{if(!st){requestAnimationFrame(()=>{un();cr();});st=true;}},{passive:true});
 
-            // 滚动动画
-            const revealElements = document.querySelectorAll('.reveal-on-scroll');
-            const revealedSet = new Set();
-            function checkRevealElements() { const triggerPoint = window.innerHeight * 0.84; revealElements.forEach(el => { if (el.getBoundingClientRect().top < triggerPoint && !revealedSet.has(el)) { revealedSet.add(el); el.classList.add('reveal-on-scroll--visible'); } }); }
-            setTimeout(checkRevealElements, 450);
+            const re=document.querySelectorAll('.reveal-on-scroll');const rs=new Set();
+            function cr(){const tp=window.innerHeight*0.84;re.forEach(el=>{if(el.getBoundingClientRect().top<tp&&!rs.has(el)){rs.add(el);el.classList.add('reveal-on-scroll--visible');}});}
+            setTimeout(cr,450);
 
-            // ========== 3D球体 ==========
-            const imagePaths = ['images/a.webp', 'images/b.webp', 'images/c.webp', 'images/d.webp', 'images/e.webp'];
-            const sphereCanvas = document.getElementById('sphereCanvas');
-            const sphereContainer = document.getElementById('sphereContainer');
-            const sphereRadius = 220; // 球体半径
-            const perspective = 1200;
-            let imgElements = [];
-            let basePositions = []; // 球面坐标 { lat, lon }
-
-            // Fibonacci球体分布
-            const N = imagePaths.length;
-            const goldenRatio = (1 + Math.sqrt(5)) / 2;
-            for (let i = 0; i < N; i++) {
-                const theta = Math.acos(1 - 2 * (i + 0.5) / N); // 纬度 [0, pi]
-                const phi = 2 * Math.PI * i / goldenRatio; // 经度
-                basePositions.push({ lat: theta, lon: phi });
-            }
-
-            // 创建图片元素
-            imagePaths.forEach((src, i) => {
-                const img = document.createElement('img');
-                img.src = src + '?v=202506';
-                img.className = 'sphere-img';
-                img.alt = `作品 ${i+1}`;
-                img.loading = 'lazy';
-                sphereCanvas.appendChild(img);
-                imgElements.push(img);
+            // 全屏球体
+            const paths=['images/a.webp','images/b.webp','images/c.webp','images/d.webp','images/e.webp'];
+            const canvas=document.getElementById('heroSphereCanvas');
+            const container=document.getElementById('heroSphere');
+            const N=paths.length;
+            const radius=Math.min(window.innerWidth,window.innerHeight)*0.35;
+            let imgs=[],bp=[];
+            const gr=(1+Math.sqrt(5))/2;
+            for(let i=0;i<N;i++){bp.push({lat:Math.acos(1-2*(i+0.5)/N),lon:2*Math.PI*i/gr});}
+            paths.forEach((s,i)=>{
+                const img=document.createElement('img');img.src=s+'?v=202506';img.className='hero-sphere-img';img.alt=`作品${i+1}`;img.loading='lazy';
+                canvas.appendChild(img);imgs.push(img);
+                img.addEventListener('click',e=>{e.stopPropagation();window.open(s,'_blank');});
             });
-
-            // 旋转状态
-            let rotY = 0; // 绕Y轴 (水平)
-            let rotX = 0; // 绕X轴 (垂直)
-            let targetRotY = 0;
-            let targetRotX = 0;
-            let mouseActive = false;
-            let animFrame;
-
-            function updateSphere() {
-                // 惯性平滑
-                rotY += (targetRotY - rotY) * 0.08;
-                rotX += (targetRotX - rotX) * 0.08;
-
-                const imgData = [];
-
-                for (let i = 0; i < N; i++) {
-                    const { lat, lon } = basePositions[i];
-                    // 计算3D坐标 (球面)
-                    let x = sphereRadius * Math.sin(lat) * Math.cos(lon);
-                    let y = sphereRadius * Math.cos(lat);
-                    let z = sphereRadius * Math.sin(lat) * Math.sin(lon);
-
-                    // 绕Y轴旋转 (rotY)
-                    const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
-                    let x1 = x * cosY - z * sinY;
-                    let z1 = x * sinY + z * cosY;
-                    x = x1; z = z1;
-
-                    // 绕X轴旋转 (rotX)
-                    const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-                    let y1 = y * cosX - z * sinX;
-                    let z2 = y * sinX + z * cosX;
-                    y = y1; z = z2;
-
-                    imgData.push({ element: imgElements[i], x, y, z });
+            let ry=0,rx=0,tr=0,txr=0,ma=false,af;
+            function us(){
+                ry+=(tr-ry)*0.08;rx+=(txr-rx)*0.08;
+                const d=[];
+                for(let i=0;i<N;i++){
+                    const{lat,lon}=bp[i];
+                    let x=radius*Math.sin(lat)*Math.cos(lon),y=radius*Math.cos(lat),z=radius*Math.sin(lat)*Math.sin(lon);
+                    const cy=Math.cos(ry),sy=Math.sin(ry);let x1=x*cy-z*sy,z1=x*sy+z*cy;x=x1;z=z1;
+                    const cx=Math.cos(rx),sx=Math.sin(rx);let y1=y*cx-z*sx,z2=y*sx+z*cx;y=y1;z=z2;
+                    d.push({e:imgs[i],x,y,z});
                 }
-
-                // 按Z轴从远到近排序，远的先渲染 (z-index小)
-                imgData.sort((a, b) => a.z - b.z);
-
-                // 更新DOM
-                imgData.forEach((data, index) => {
-                    const { element, x, y, z } = data;
-                    // 透视投影
-                    const scale = perspective / (perspective + z);
-                    const screenX = x * scale;
-                    const screenY = y * scale;
-                    element.style.transform = `translate(-50%, -50%) translate3d(${screenX}px, ${screenY}px, 0) scale(${scale})`;
-                    element.style.zIndex = index; // 远的z-index小，近的大
-                    element.style.opacity = Math.max(0.3, Math.min(1, (z + sphereRadius) / (2 * sphereRadius)));
+                d.sort((a,b)=>a.z-b.z);
+                d.forEach((o,i)=>{
+                    const s=1200/(1200+o.z);
+                    o.e.style.transform=`translate(-50%,-50%) translate3d(${o.x*s}px,${o.y*s}px,0) scale(${s})`;
+                    o.e.style.zIndex=i;o.e.style.opacity=Math.max(0.25,Math.min(1,(o.z+radius)/(2*radius)));
                 });
-
-                if (!mouseActive) {
-                    // 自动缓慢旋转
-                    targetRotY += 0.002;
-                }
-                animFrame = requestAnimationFrame(updateSphere);
+                if(!ma)tr+=0.002;
+                af=requestAnimationFrame(us);
             }
-
-            // 鼠标控制
-            function handleMouseMove(e) {
-                const rect = sphereContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width/2;
-                const y = e.clientY - rect.top - rect.height/2;
-                targetRotY = (x / rect.width) * Math.PI * 2;
-                targetRotX = -(y / rect.height) * Math.PI * 1.5;
-                mouseActive = true;
-                clearTimeout(window.mouseTimeout);
-                window.mouseTimeout = setTimeout(() => { mouseActive = false; }, 2000);
-            }
-
-            function handleTouchMove(e) {
-                e.preventDefault();
-                const rect = sphereContainer.getBoundingClientRect();
-                const touch = e.touches[0];
-                const x = touch.clientX - rect.left - rect.width/2;
-                const y = touch.clientY - rect.top - rect.height/2;
-                targetRotY = (x / rect.width) * Math.PI * 2;
-                targetRotX = -(y / rect.height) * Math.PI * 1.5;
-                mouseActive = true;
-                clearTimeout(window.mouseTimeout);
-                window.mouseTimeout = setTimeout(() => { mouseActive = false; }, 2000);
-            }
-
-            sphereContainer.addEventListener('mousemove', handleMouseMove);
-            sphereContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
-            sphereContainer.addEventListener('touchstart', (e) => { mouseActive = true; });
-
-            // 鼠标离开容器后缓慢停止
-            sphereContainer.addEventListener('mouseleave', () => { mouseActive = false; });
-
-            // 点击图片放大查看
-            sphereCanvas.addEventListener('click', (e) => {
-                if (e.target.classList.contains('sphere-img')) {
-                    const src = e.target.src.replace('?v=202506', '');
-                    window.open(src, '_blank');
-                }
+            container.addEventListener('mousemove',e=>{
+                const r=container.getBoundingClientRect();
+                tr=(e.clientX-r.left-r.width/2)/r.width*Math.PI*2;
+                txr=-(e.clientY-r.top-r.height/2)/r.height*Math.PI*1.5;
+                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},2000);
             });
+            container.addEventListener('touchmove',e=>{
+                e.preventDefault();
+                const r=container.getBoundingClientRect(),t=e.touches[0];
+                tr=(t.clientX-r.left-r.width/2)/r.width*Math.PI*2;
+                txr=-(t.clientY-r.top-r.height/2)/r.height*Math.PI*1.5;
+                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},2000);
+            },{passive:false});
+            container.addEventListener('mouseleave',()=>{ma=false;});
+            window.addEventListener('resize',()=>{/* 球体自适应 */});
+            us();
 
-            updateSphere();
+            const lsw=document.getElementById('langSwitch'),lo=lsw.querySelectorAll('.lang-option'),at=document.querySelectorAll('[data-zh][data-en]');
+            let cl='zh';const tc=new Map();at.forEach(el=>{tc.set(el,{zh:el.getAttribute('data-zh'),en:el.getAttribute('data-en')});});
+            function sl(l){if(cl===l)return;cl=l;lo.forEach(o=>{o.classList.toggle('lang-option--active',o.getAttribute('data-lang')===l);});at.forEach(el=>{const c=tc.get(el);if(c&&c[l])el.innerHTML=c[l];});document.title=l==='zh'?'yrenk — 艺术家 / 设计师':'yrenk — Artist / Designer';document.documentElement.lang=l==='zh'?'zh-CN':'en';}
+            lo.forEach(o=>{o.addEventListener('click',()=>{sl(o.getAttribute('data-lang'));});});
 
-            // 语言切换
-            const langSwitch = document.getElementById('langSwitch');
-            const langOptions = langSwitch.querySelectorAll('.lang-option');
-            const allTranslatable = document.querySelectorAll('[data-zh][data-en]');
-            let currentLang = 'zh';
-            const translationCache = new Map();
-            allTranslatable.forEach(el => { translationCache.set(el, { zh: el.getAttribute('data-zh'), en: el.getAttribute('data-en') }); });
-            function switchLanguage(lang) { if (currentLang === lang) return; currentLang = lang; langOptions.forEach(opt => { const isActive = opt.getAttribute('data-lang') === lang; opt.classList.toggle('lang-option--active', isActive); opt.setAttribute('aria-pressed', isActive); }); allTranslatable.forEach(el => { const cached = translationCache.get(el); if (cached && cached[lang]) { el.innerHTML = cached[lang]; } }); document.title = lang === 'zh' ? 'yrenk — 艺术家 / 设计师' : 'yrenk — Artist / Designer'; document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en'; window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } })); }
-            langOptions.forEach(option => { option.addEventListener('click', () => { switchLanguage(option.getAttribute('data-lang')); }); });
-            langSwitch.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchLanguage(currentLang === 'zh' ? 'en' : 'zh'); } });
+            const ctb=document.getElementById('commentsToggle'),ccw=document.getElementById('commentsCollapseWrapper'),cc=document.getElementById('commentsCount');
+            let ie=true,tc2=0;
+            function uc2(){if(ie){ctb.classList.add('comments-toggle--expanded');ccw.classList.remove('comments-collapse-wrapper--collapsed');ctb.querySelector('.comments-toggle__label').textContent=cl==='zh'?'收起讨论':'Collapse';}else{ctb.classList.remove('comments-toggle--expanded');ccw.classList.add('comments-collapse-wrapper--collapsed');ctb.querySelector('.comments-toggle__label').textContent=cl==='zh'?'展开讨论':'Discussion';}if(tc2>0){cc.textContent=tc2;cc.classList.add('comments-toggle__count--visible');}else{cc.classList.remove('comments-toggle__count--visible');}}
+            ctb.addEventListener('click',()=>{ie=!ie;uc2();});
+            window.addEventListener('message',e=>{if(e.origin==='https://giscus.app'&&e.data&&e.data.giscus){const d=e.data.giscus;if(d.discussion&&typeof d.discussion.totalCommentCount==='number'){tc2=d.discussion.totalCommentCount+(d.discussion.totalReplyCount||0);uc2();}}});
+            uc2();
 
-            // 评论区
-            const commentsToggle = document.getElementById('commentsToggle'), commentsCollapseWrapper = document.getElementById('commentsCollapseWrapper'), commentsCount = document.getElementById('commentsCount');
-            let isCommentsExpanded = true, totalComments = 0;
-            function updateCommentsUI() {
-                if (isCommentsExpanded) { commentsToggle.classList.add('comments-toggle--expanded'); commentsCollapseWrapper.classList.remove('comments-collapse-wrapper--collapsed'); commentsToggle.querySelector('.comments-toggle__label').textContent = currentLang === 'zh' ? '收起讨论' : 'Collapse'; }
-                else { commentsToggle.classList.remove('comments-toggle--expanded'); commentsCollapseWrapper.classList.add('comments-collapse-wrapper--collapsed'); commentsToggle.querySelector('.comments-toggle__label').textContent = currentLang === 'zh' ? '展开讨论' : 'Discussion'; }
-                if (totalComments > 0) { commentsCount.textContent = totalComments; commentsCount.classList.add('comments-toggle__count--visible'); } else { commentsCount.classList.remove('comments-toggle__count--visible'); }
-            }
-            commentsToggle.addEventListener('click', () => { isCommentsExpanded = !isCommentsExpanded; updateCommentsUI(); });
-            window.addEventListener('message', (event) => { if (event.origin === 'https://giscus.app' && event.data && event.data.giscus) { const d = event.data.giscus; if (d.discussion && typeof d.discussion.totalCommentCount === 'number') { totalComments = d.discussion.totalCommentCount + (d.discussion.totalReplyCount || 0); updateCommentsUI(); } } });
-            updateCommentsUI();
-            window.addEventListener('languageChanged', () => { commentsToggle.querySelector('.comments-toggle__label').textContent = isCommentsExpanded ? (currentLang === 'zh' ? '收起讨论' : 'Collapse') : (currentLang === 'zh' ? '展开讨论' : 'Discussion'); });
-
-            console.log('%c yrenk %c 3D Sphere Portfolio ', 'font-size:1.5em;font-weight:700;color:#F4EAC5;', 'font-size:0.9em;color:#F4EAC5;');
-            window.switchLanguage = switchLanguage;
-            window.getCurrentLang = () => currentLang;
+            console.log('%c yrenk %c Fullscreen Sphere ','font-size:1.5em;font-weight:700;color:#F4EAC5;','font-size:0.9em;color:#F4EAC5;');
+            window.switchLanguage=sl;
         })();
     </script>
 </body>
