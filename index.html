@@ -97,12 +97,11 @@
             transform-style:preserve-3d; pointer-events:none;
         }
         .hero-sphere-img {
-            position:absolute; width:180px; height:auto; border-radius:10px;
+            position:absolute; width:160px; height:auto; border-radius:10px;
             box-shadow:0 20px 60px rgba(0,0,0,0.5); transform-origin:center center;
             transition:filter 0.3s; will-change:transform,z-index; pointer-events:auto; cursor:pointer;
         }
         .hero-sphere-img:hover { filter:brightness(1.2); }
-        /* 叠加文字 */
         .hero-overlay {
             position:absolute; bottom:60px; left:60px; z-index:10; pointer-events:none;
             animation:fadeInUp 1.5s 0.5s var(--spring-soft) both;
@@ -154,6 +153,53 @@
         .contact-link__dot,.contact-info__dot { width:6px; height:6px; border-radius:50%; background:var(--accent-pale); }
         .footer { text-align:center; padding:60px 0; color:var(--text-all); font-size:0.78rem; font-weight:300; letter-spacing:0.08em; border-top:1px solid rgba(164,226,198,0.06); }
 
+        /* Lightbox */
+        .lightbox-overlay {
+            position:fixed; inset:0; z-index:10000; background:rgba(0,8,30,0.9);
+            backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+            display:flex; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none; transition:opacity 0.35s var(--spring-soft);
+        }
+        .lightbox-overlay--visible { opacity:1; pointer-events:all; }
+        .lightbox-content {
+            display:flex; align-items:center; justify-content:center; gap:24px;
+            max-width:90vw; max-height:85vh; position:relative;
+        }
+        .lightbox-img-wrap {
+            max-width:75vw; max-height:80vh; display:flex; align-items:center; justify-content:center;
+            transform:scale(0.88); transition:transform 0.5s var(--spring);
+        }
+        .lightbox-overlay--visible .lightbox-img-wrap { transform:scale(1); }
+        .lightbox-img-wrap img {
+            max-width:100%; max-height:80vh; object-fit:contain; border-radius:12px;
+            box-shadow:0 30px 80px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position:absolute; top:20px; right:28px; width:40px; height:40px;
+            border-radius:50%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+            color:var(--text-all); font-size:1.3rem; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.3s var(--spring); z-index:10; line-height:1;
+        }
+        .lightbox-close:active { transform:scale(0.88); }
+        .lightbox-close:hover { background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.3); }
+        .lightbox-arrow {
+            width:46px; height:46px; border-radius:50%; flex-shrink:0;
+            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+            color:var(--text-all); font-size:1.4rem; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.3s var(--spring); user-select:none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        .lightbox-arrow:active { transform:scale(0.85); }
+        .lightbox-arrow:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.25); }
+        .lightbox-arrow--hidden { opacity:0; pointer-events:none; }
+        .lightbox-counter {
+            position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+            font-size:0.75rem; letter-spacing:0.08em; color:var(--text-all); opacity:0.6;
+            pointer-events:none;
+        }
+
         @keyframes revealBlurSlide { 0% { filter:blur(18px); transform:translateY(42px); } 100% { filter:blur(0); transform:translateY(0); } }
         .reveal-on-scroll { animation:none; }
         .reveal-on-scroll--visible { animation:revealBlurSlide 1.2s var(--spring-soft) both; }
@@ -164,8 +210,11 @@
             .nav__links { gap:16px; }
             .hero-overlay { bottom:40px; left:32px; }
             .hero-scroll { bottom:24px; left:32px; }
-            .hero-sphere-img { width:140px; }
+            .hero-sphere-img { width:130px; }
             .section { padding:70px 0; }
+            .lightbox-content { gap:12px; }
+            .lightbox-arrow { width:36px; height:36px; font-size:1.1rem; }
+            .lightbox-close { top:14px; right:18px; width:34px; height:34px; font-size:1.1rem; }
         }
         @media (max-width:600px) {
             .main-container { padding:0 20px; }
@@ -182,6 +231,11 @@
             .contact-link,.contact-info { font-size:0.84rem; padding:10px 20px; text-align:center; justify-content:center; }
             .loading-logo { top:24px; left:20px; font-size:1.1rem; }
             .lang-option { padding:4px 10px; font-size:0.7rem; }
+            .lightbox-content { gap:8px; }
+            .lightbox-arrow { width:30px; height:30px; font-size:1rem; }
+            .lightbox-img-wrap { max-width:85vw; }
+            .lightbox-close { top:10px; right:12px; width:30px; height:30px; font-size:1rem; }
+            .lightbox-counter { bottom:16px; font-size:0.7rem; }
         }
     </style>
 </head>
@@ -278,6 +332,23 @@
         </footer>
     </div>
 
+    <!-- Lightbox 图片浏览器 -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭">✕</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-arrow" id="lightboxPrev" onclick="navigateLightbox(-1)" aria-label="上一张">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="lightbox-img-wrap">
+                <img id="lightboxImg" src="" alt="">
+            </div>
+            <button class="lightbox-arrow" id="lightboxNext" onclick="navigateLightbox(1)" aria-label="下一张">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
     <script>
         (function() {
             const cursor = document.getElementById('customCursor');
@@ -288,7 +359,7 @@
             function rc(){if(!ct){requestAnimationFrame(uc);ct=true;}}
             document.addEventListener('mousemove',e=>{
                 tx=e.clientX;ty=e.clientY;if(!cv){cx=tx;cy=ty;cursor.style.left=cx+'px';cursor.style.top=cy+'px';cursor.style.opacity='1';cv=true;}rc();
-                const el=e.target,inv=el.closest('a')||el.closest('button')||el.closest('.hero-sphere-img')||el.closest('.nav__link');
+                const el=e.target,inv=el.closest('a')||el.closest('button')||el.closest('.hero-sphere-img')||el.closest('.nav__link')||el.closest('.lightbox-arrow');
                 if(inv){cursor.classList.add('custom-cursor--inverted','custom-cursor--hover');}else{cursor.classList.remove('custom-cursor--inverted','custom-cursor--hover');}
             });
             document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';cv=false;cursor.classList.remove('custom-cursor--inverted','custom-cursor--hover');});
@@ -307,19 +378,20 @@
             function cr(){const tp=window.innerHeight*0.84;re.forEach(el=>{if(el.getBoundingClientRect().top<tp&&!rs.has(el)){rs.add(el);el.classList.add('reveal-on-scroll--visible');}});}
             setTimeout(cr,450);
 
-            // 全屏球体
-            const paths=['images/a.webp','images/b.webp','images/c.webp','images/d.webp','images/e.webp'];
+            // 全屏球体优化旋转
+            const paths=['images/a.webp','images/b.webp','images/c.webp','images/d.webp','images/e.webp','images/f.webp','images/g.webp','images/h.webp','images/i.webp','images/j.webp'];
             const canvas=document.getElementById('heroSphereCanvas');
             const container=document.getElementById('heroSphere');
             const N=paths.length;
-            const radius=Math.min(window.innerWidth,window.innerHeight)*0.35;
+            const radius=Math.min(window.innerWidth,window.innerHeight)*0.36;
             let imgs=[],bp=[];
             const gr=(1+Math.sqrt(5))/2;
             for(let i=0;i<N;i++){bp.push({lat:Math.acos(1-2*(i+0.5)/N),lon:2*Math.PI*i/gr});}
             paths.forEach((s,i)=>{
                 const img=document.createElement('img');img.src=s+'?v=202506';img.className='hero-sphere-img';img.alt=`作品${i+1}`;img.loading='lazy';
+                img.dataset.index=i;
                 canvas.appendChild(img);imgs.push(img);
-                img.addEventListener('click',e=>{e.stopPropagation();window.open(s,'_blank');});
+                img.addEventListener('click',e=>{e.stopPropagation();openLightbox(i);});
             });
             let ry=0,rx=0,tr=0,txr=0,ma=false,af;
             function us(){
@@ -336,27 +408,67 @@
                 d.forEach((o,i)=>{
                     const s=1200/(1200+o.z);
                     o.e.style.transform=`translate(-50%,-50%) translate3d(${o.x*s}px,${o.y*s}px,0) scale(${s})`;
-                    o.e.style.zIndex=i;o.e.style.opacity=Math.max(0.25,Math.min(1,(o.z+radius)/(2*radius)));
+                    o.e.style.zIndex=i;o.e.style.opacity=Math.max(0.2,Math.min(1,(o.z+radius)/(2*radius)));
                 });
-                if(!ma)tr+=0.002;
+                if(!ma)tr+=0.008;  // 自动旋转速度
                 af=requestAnimationFrame(us);
             }
             container.addEventListener('mousemove',e=>{
                 const r=container.getBoundingClientRect();
                 tr=(e.clientX-r.left-r.width/2)/r.width*Math.PI*2;
                 txr=-(e.clientY-r.top-r.height/2)/r.height*Math.PI*1.5;
-                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},2000);
+                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},1500);
             });
             container.addEventListener('touchmove',e=>{
                 e.preventDefault();
                 const r=container.getBoundingClientRect(),t=e.touches[0];
                 tr=(t.clientX-r.left-r.width/2)/r.width*Math.PI*2;
                 txr=-(t.clientY-r.top-r.height/2)/r.height*Math.PI*1.5;
-                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},2000);
+                ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},1500);
             },{passive:false});
             container.addEventListener('mouseleave',()=>{ma=false;});
-            window.addEventListener('resize',()=>{/* 球体自适应 */});
             us();
+
+            // Lightbox
+            const lbOverlay=document.getElementById('lightboxOverlay');
+            const lbImg=document.getElementById('lightboxImg');
+            const lbPrev=document.getElementById('lightboxPrev');
+            const lbNext=document.getElementById('lightboxNext');
+            const lbCounter=document.getElementById('lightboxCounter');
+            let lbIndex=0;
+            function openLightbox(index){
+                lbIndex=index;
+                updateLightboxImage();
+                lbOverlay.classList.add('lightbox-overlay--visible');
+                document.body.style.overflow='hidden';
+                updateArrowVisibility();
+            }
+            function closeLightbox(){
+                lbOverlay.classList.remove('lightbox-overlay--visible');
+                document.body.style.overflow='';
+            }
+            function navigateLightbox(dir){
+                lbIndex=(lbIndex+dir+N)%N;
+                updateLightboxImage();
+                updateArrowVisibility();
+            }
+            function updateLightboxImage(){
+                lbImg.src=paths[lbIndex]+'?v=202506';
+                lbCounter.textContent=`${lbIndex+1} / ${N}`;
+            }
+            function updateArrowVisibility(){
+                lbPrev.classList.toggle('lightbox-arrow--hidden',false);
+                lbNext.classList.toggle('lightbox-arrow--hidden',false);
+            }
+            window.openLightbox=openLightbox;
+            window.closeLightbox=closeLightbox;
+            window.navigateLightbox=navigateLightbox;
+            document.addEventListener('keydown',e=>{
+                if(!lbOverlay.classList.contains('lightbox-overlay--visible'))return;
+                if(e.key==='Escape')closeLightbox();
+                if(e.key==='ArrowLeft')navigateLightbox(-1);
+                if(e.key==='ArrowRight')navigateLightbox(1);
+            });
 
             const lsw=document.getElementById('langSwitch'),lo=lsw.querySelectorAll('.lang-option'),at=document.querySelectorAll('[data-zh][data-en]');
             let cl='zh';const tc=new Map();at.forEach(el=>{tc.set(el,{zh:el.getAttribute('data-zh'),en:el.getAttribute('data-en')});});
@@ -370,7 +482,7 @@
             window.addEventListener('message',e=>{if(e.origin==='https://giscus.app'&&e.data&&e.data.giscus){const d=e.data.giscus;if(d.discussion&&typeof d.discussion.totalCommentCount==='number'){tc2=d.discussion.totalCommentCount+(d.discussion.totalReplyCount||0);uc2();}}});
             uc2();
 
-            console.log('%c yrenk %c Fullscreen Sphere ','font-size:1.5em;font-weight:700;color:#F4EAC5;','font-size:0.9em;color:#F4EAC5;');
+            console.log('%c yrenk %c Fullscreen Sphere + Lightbox ','font-size:1.5em;font-weight:700;color:#F4EAC5;','font-size:0.9em;color:#F4EAC5;');
             window.switchLanguage=sl;
         })();
     </script>
