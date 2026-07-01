@@ -204,6 +204,7 @@
         .reveal-on-scroll { animation:none; }
         .reveal-on-scroll--visible { animation:revealBlurSlide 1.2s var(--spring-soft) both; }
 
+        /* 移动端优化 */
         @media (max-width:860px) {
             .main-container { padding:0 32px; }
             .nav { padding:14px 32px; }
@@ -218,13 +219,13 @@
         }
         @media (max-width:600px) {
             .main-container { padding:0 20px; }
-            .nav { padding:12px 20px; }
-            .nav__links { gap:8px; }
+            .nav { padding:12px 20px; flex-wrap:wrap; }
+            .nav__links { gap:10px; width:100%; justify-content:flex-start; }
             .nav__link { font-size:0.72rem; }
             .hero-overlay { bottom:32px; left:20px; }
             .hero-overlay p { font-size:0.9rem; }
             .hero-scroll { bottom:16px; left:20px; }
-            .hero-sphere-img { width:100px; }
+            .hero-sphere-img { width:100px; border-radius:8px; }
             .section { padding:50px 0; }
             .text-block p { font-size:0.95rem; }
             .contact-row { flex-direction:column; gap:12px; }
@@ -236,6 +237,11 @@
             .lightbox-img-wrap { max-width:85vw; }
             .lightbox-close { top:10px; right:12px; width:30px; height:30px; font-size:1rem; }
             .lightbox-counter { bottom:16px; font-size:0.7rem; }
+        }
+        @media (max-width:380px) {
+            .hero-sphere-img { width:85px; }
+            .hero-overlay p { font-size:0.85rem; }
+            .nav__link { font-size:0.68rem; }
         }
     </style>
 </head>
@@ -378,12 +384,18 @@
             function cr(){const tp=window.innerHeight*0.84;re.forEach(el=>{if(el.getBoundingClientRect().top<tp&&!rs.has(el)){rs.add(el);el.classList.add('reveal-on-scroll--visible');}});}
             setTimeout(cr,450);
 
-            // 全屏球体优化旋转
-            const paths=['images/a.webp','images/b.webp','images/c.webp','images/d.webp','images/e.webp','images/f.webp','images/g.webp','images/h.webp','images/i.webp','images/j.webp'];
+            // 全屏球体 – 包含 k 和 l 图片
+            const paths=[
+                'images/a.webp','images/b.webp','images/c.webp','images/d.webp','images/e.webp',
+                'images/f.webp','images/g.webp','images/h.webp','images/i.webp','images/j.webp',
+                'images/k.webp','images/l.webp'
+            ];
             const canvas=document.getElementById('heroSphereCanvas');
             const container=document.getElementById('heroSphere');
             const N=paths.length;
-            const radius=Math.min(window.innerWidth,window.innerHeight)*0.36;
+            // 移动端适当缩小半径，提升性能
+            const isMobile = window.innerWidth < 600;
+            const radius = isMobile ? Math.min(window.innerWidth,window.innerHeight)*0.38 : Math.min(window.innerWidth,window.innerHeight)*0.36;
             let imgs=[],bp=[];
             const gr=(1+Math.sqrt(5))/2;
             for(let i=0;i<N;i++){bp.push({lat:Math.acos(1-2*(i+0.5)/N),lon:2*Math.PI*i/gr});}
@@ -394,6 +406,8 @@
                 img.addEventListener('click',e=>{e.stopPropagation();openLightbox(i);});
             });
             let ry=0,rx=0,tr=0,txr=0,ma=false,af;
+            // 移动端降低自动旋转速度，节省资源
+            const autoSpeed = isMobile ? 0.005 : 0.008;
             function us(){
                 ry+=(tr-ry)*0.08;rx+=(txr-rx)*0.08;
                 const d=[];
@@ -410,7 +424,7 @@
                     o.e.style.transform=`translate(-50%,-50%) translate3d(${o.x*s}px,${o.y*s}px,0) scale(${s})`;
                     o.e.style.zIndex=i;o.e.style.opacity=Math.max(0.2,Math.min(1,(o.z+radius)/(2*radius)));
                 });
-                if(!ma)tr+=0.008;  // 自动旋转速度
+                if(!ma)tr+=autoSpeed;
                 af=requestAnimationFrame(us);
             }
             container.addEventListener('mousemove',e=>{
@@ -427,6 +441,11 @@
                 ma=true;clearTimeout(window.mt);window.mt=setTimeout(()=>{ma=false;},1500);
             },{passive:false});
             container.addEventListener('mouseleave',()=>{ma=false;});
+            // 窗口大小变化时重新计算半径
+            window.addEventListener('resize',()=>{
+                const newMobile = window.innerWidth < 600;
+                radius = newMobile ? Math.min(window.innerWidth,window.innerHeight)*0.38 : Math.min(window.innerWidth,window.innerHeight)*0.36;
+            });
             us();
 
             // Lightbox
